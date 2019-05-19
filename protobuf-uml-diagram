@@ -13,3 +13,94 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+from io import StringIO
+
+import click
+from google.protobuf.descriptor_pb2 import FieldDescriptorProto
+from graphviz import Source
+
+
+@click.command()
+@click.option('--proto', required=True, help='Input .proto compiled file.')
+@click.option('--output', required=True, help='Output file.')
+def main(proto, output):
+    proto_file = __import__(proto)
+    # a mapping with values such as 1: 'double', 9: 'string', etc.
+    # to find the text value of a type
+    type_mapping = {number: text.lower().replace("type_", "") for text, number in FieldDescriptorProto.Type.items()}
+
+    # our compiled type actually includes .DESCRIPTOR where we can find
+    # introspection data
+    types = proto_file.DESCRIPTOR.message_types_by_name
+
+    message_mapping = {}
+
+    entry_index = 2
+    for _type, message in types.items():
+        message_mapping[_type] = entry_index
+        entry_index += 1
+
+    template = StringIO()
+    template.write(f"""
+    digraph "Protobuf UML class diagram" {{
+        fontname = "Bitstream Vera Sans"
+        fontsize = 8
+
+        node [
+            fontname = "Bitstream Vera Sans"
+            fontsize = 8
+            shape = "record"
+            style=filled
+            fillcolor=gray95
+        ]
+
+        edge [
+            fontname = "Bitstream Vera Sans"
+            fontsize = 8
+
+        ]
+
+    """)
+
+    relationships = []
+
+    entry_index = 2
+    for _type, message in types.items():
+        type_template_text = StringIO()
+        type_template_text.write(
+            f"""    {entry_index}[label = "{{{_type}|""")  # ]\n""")
+        fields = []
+        for _field in message.fields:
+            message_type = _field.message_type
+            field_type = type_mapping[_field.type]  # this will be 'message' if referencing another protobuf message
+
+            if message_type:
+                this_node = message_mapping[_type]
+                that_node = message_mapping[message_type.name]
+                relationships.append(f"{this_node}->{that_node}")
+                field_type = message_type.name  # so we replace the 'message' token by the actual name
+
+            fields.append(f"+ {_field.name}:{field_type}")
+
+        # add fields
+        type_template_text.write("\\n".join(fields))
+        type_template_text.write("}\"]\n")
+        entry_index += 1
+        template.write(type_template_text.getvalue())
+
+        type_template_text.close()
+
+    template.write("\n")
+    template.write("\n".join(relationships))
+
+    template.write("\n}")
+    template_text = template.getvalue()
+    template.close()
+
+    src = Source(template_text)
+    src.render(output)
+
+
+if __name__ == '__main__':
+    main()
