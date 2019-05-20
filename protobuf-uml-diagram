@@ -19,13 +19,14 @@ from io import StringIO
 import click
 from google.protobuf.descriptor_pb2 import FieldDescriptorProto
 from graphviz import Source
+from importlib import import_module
 
 
 @click.command()
-@click.option('--proto', required=True, help='Input .proto compiled file.')
+@click.option('--proto', required=True, help='Compiled Python proto module (e.g. some.package.ws_compiled_pb2')
 @click.option('--output', required=True, help='Output file.')
 def main(proto, output):
-    proto_file = __import__(proto)
+    proto_file = import_module(proto)
     # a mapping with values such as 1: 'double', 9: 'string', etc.
     # to find the text value of a type
     type_mapping = {number: text.lower().replace("type_", "") for text, number in FieldDescriptorProto.Type.items()}
