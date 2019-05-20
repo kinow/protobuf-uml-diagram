@@ -23,8 +23,8 @@ from importlib import import_module
 
 
 @click.command()
-@click.option('--proto', required=True, help='Compiled Python proto module (e.g. some.package.ws_compiled_pb2')
-@click.option('--output', required=True, help='Output file.')
+@click.option('--proto', required=True, help='Compiled Python proto module (e.g. some.package.ws_compiled_pb2).')
+@click.option('--output', required=True, help='Output directory.')
 def main(proto, output):
     proto_file = import_module(proto)
     # a mapping with values such as 1: 'double', 9: 'string', etc.
@@ -100,6 +100,7 @@ def main(proto, output):
     template.close()
 
     src = Source(template_text)
+    src.format = "png"
     src.render(output)
 
 
