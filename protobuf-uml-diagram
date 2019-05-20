@@ -42,6 +42,7 @@ def _get_uml_filename(module_filename) -> str:
     return Path(module_filename).stem
 
 
+
 @click.command()
 @click.option('--proto', required=True, help='Compiled Python proto module (e.g. some.package.ws_compiled_pb2).')
 @click.option('--output', type=PathPath(file_okay=False), required=True, help='Output directory.')
@@ -62,9 +63,11 @@ def main(proto: str, output: Path):
         message_mapping[_type] = entry_index
         entry_index += 1
 
-    template = StringIO()
-    template.write(f"""
-    digraph "Protobuf UML class diagram" {{
+    relationships = []
+    classes = []
+
+    uml_template = """
+    digraph "Protobuf UML class diagram" {
         fontname = "Bitstream Vera Sans"
         fontsize = 8
 
@@ -82,9 +85,11 @@ def main(proto: str, output: Path):
 
         ]
 
-    """)
+CLASSES
 
-    relationships = []
+RELATIONSHIPS
+    }
+    """
 
     entry_index = 2
     for _type, message in types.items():
@@ -99,7 +104,7 @@ def main(proto: str, output: Path):
             if message_type:
                 this_node = message_mapping[_type]
                 that_node = message_mapping[message_type.name]
-                relationships.append(f"{this_node}->{that_node}")
+                relationships.append(f"    {this_node}->{that_node}")
                 field_type = message_type.name  # so we replace the 'message' token by the actual name
 
             fields.append(f"+ {_field.name}:{field_type}")
@@ -108,20 +113,20 @@ def main(proto: str, output: Path):
         type_template_text.write("\\n".join(fields))
         type_template_text.write("}\"]\n")
         entry_index += 1
-        template.write(type_template_text.getvalue())
+        classes.append(type_template_text.getvalue())
 
         type_template_text.close()
 
-    template.write("\n")
-    template.write("\n".join(relationships))
+    uml_template = uml_template.replace("CLASSES", "\n".join(classes))
+    uml_template = uml_template.replace("RELATIONSHIPS", "\n".join(relationships))
 
-    template.write("\n}")
-    template_text = template.getvalue()
-    template.close()
-
-    src = Source(template_text)
+    src = Source(uml_template)
     src.format = "png"
-    src.render(str(output.joinpath(_get_uml_filename(proto_file.__file__))))
+    src.render(
+        filename=str(output.joinpath(_get_uml_filename(proto_file.__file__))),
+        view=False,
+        cleanup=True
+    )
 
 
 if __name__ == '__main__':
