@@ -14,18 +14,38 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from importlib import import_module
 from io import StringIO
+from pathlib import Path
 
 import click
 from google.protobuf.descriptor_pb2 import FieldDescriptorProto
 from graphviz import Source
-from importlib import import_module
+
+
+# https://github.com/pallets/click/issues/405#issuecomment-470812067
+class PathPath(click.Path):
+    """A Click path argument that returns a pathlib Path, not a string"""
+
+    def convert(self, value, param, ctx):
+        return Path(super().convert(value, param, ctx))
+
+
+def _get_uml_filename(module_filename) -> str:
+    """
+    Return the UML file name, for a given Python module name.
+    :param module_filename: e.g. cylc.flow.ws_messages_proto.pb2.
+    :type module_filename: str
+    :return: UML file name (e.g. ws_messages_proto).
+    :rtype: str
+    """
+    return Path(module_filename).stem
 
 
 @click.command()
 @click.option('--proto', required=True, help='Compiled Python proto module (e.g. some.package.ws_compiled_pb2).')
-@click.option('--output', required=True, help='Output directory.')
-def main(proto, output):
+@click.option('--output', type=PathPath(file_okay=False), required=True, help='Output directory.')
+def main(proto: str, output: Path):
     proto_file = import_module(proto)
     # a mapping with values such as 1: 'double', 9: 'string', etc.
     # to find the text value of a type
@@ -101,7 +121,7 @@ def main(proto, output):
 
     src = Source(template_text)
     src.format = "png"
-    src.render(output)
+    src.render(str(output.joinpath(_get_uml_filename(proto_file.__file__))))
 
 
 if __name__ == '__main__':
