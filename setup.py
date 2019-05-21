@@ -45,7 +45,11 @@ setup(
     description="Create UML diagrams from Protobuf proto files",
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
-    scripts=["protobuf-uml-diagram"],
+    entry_points={
+        "console_scripts": ["protobuf-uml-diagram=protobuf_uml_diagram:main"]
+    },
+    py_modules=['protobuf_uml_diagram'],
+    python_requires='>=3.7',
     install_requires=install_requires,
     tests_require=tests_require
 )
