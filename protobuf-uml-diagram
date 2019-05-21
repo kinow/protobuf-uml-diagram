@@ -42,7 +42,6 @@ def _get_uml_filename(module_filename) -> str:
     return Path(module_filename).stem
 
 
-
 @click.command()
 @click.option('--proto', required=True, help='Compiled Python proto module (e.g. some.package.ws_compiled_pb2).')
 @click.option('--output', type=PathPath(file_okay=False), required=True, help='Output directory.')
