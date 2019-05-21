@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import logging
 from importlib import import_module
 from io import StringIO
 from pathlib import Path
@@ -21,6 +22,9 @@ from pathlib import Path
 import click
 from google.protobuf.descriptor_pb2 import FieldDescriptorProto
 from graphviz import Source
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 
 # https://github.com/pallets/click/issues/405#issuecomment-470812067
@@ -129,6 +133,7 @@ def _get_uml_template(*, types: dict, type_mapping: dict, message_mapping: dict)
 @click.option('--proto', required=True, help='Compiled Python proto module (e.g. some.package.ws_compiled_pb2).')
 @click.option('--output', type=PathPath(file_okay=False), required=True, help='Output directory.')
 def main(proto: str, output: Path):
+    logger.info(f"Importing compiled proto {proto}")
     proto_file = import_module(proto)
     # a mapping with values such as 1: 'double', 9: 'string', etc.
     # to find the text value of a type
@@ -142,10 +147,16 @@ def main(proto: str, output: Path):
 
     uml_template = _get_uml_template(types=types, type_mapping=type_mapping, message_mapping=message_mapping)
 
+    if logger.isEnabledFor(logging.DEBUG):
+        logger.debug("UML template:")
+        logger.debug(uml_template)
+
     src = Source(uml_template)
     src.format = "png"
+    rendered_filename = str(output.joinpath(_get_uml_filename(proto_file.__file__)))
+    logger.info(f"Writing PNG diagram to {rendered_filename}.png")
     src.render(
-        filename=str(output.joinpath(_get_uml_filename(proto_file.__file__))),
+        filename=rendered_filename,
         view=False,
         cleanup=True
     )
