@@ -58,48 +58,42 @@ def _get_message_mapping(types: dict) -> dict:
     return message_mapping
 
 
-@click.command()
-@click.option('--proto', required=True, help='Compiled Python proto module (e.g. some.package.ws_compiled_pb2).')
-@click.option('--output', type=PathPath(file_okay=False), required=True, help='Output directory.')
-def main(proto: str, output: Path):
-    proto_file = import_module(proto)
-    # a mapping with values such as 1: 'double', 9: 'string', etc.
-    # to find the text value of a type
-    type_mapping = {number: text.lower().replace("type_", "") for text, number in FieldDescriptorProto.Type.items()}
-
-    # our compiled type actually includes .DESCRIPTOR where we can find
-    # introspection data
-    types = proto_file.DESCRIPTOR.message_types_by_name
-
-    message_mapping = _get_message_mapping(types)
-
+def _get_uml_template(*, types: dict, type_mapping: dict, message_mapping: dict) -> str:
+    """
+    Return the graphviz dot template for a UML class diagram.
+    :param types: protobuf types with indexes
+    :param type_mapping: a mapping for the protobuf type indexes and the type text
+    :param message_mapping: a dict with which messages were linked, for the relationships
+    :return: UML template
+    :rtype: str
+    """
     relationships = []
     classes = []
 
     uml_template = """
-    digraph "Protobuf UML class diagram" {
-        fontname = "Bitstream Vera Sans"
-        fontsize = 8
-
-        node [
-            fontname = "Bitstream Vera Sans"
-            fontsize = 8
-            shape = "record"
-            style=filled
-            fillcolor=gray95
-        ]
-
-        edge [
+        digraph "Protobuf UML class diagram" {
             fontname = "Bitstream Vera Sans"
             fontsize = 8
 
-        ]
+            node [
+                fontname = "Bitstream Vera Sans"
+                fontsize = 8
+                shape = "record"
+                style=filled
+                fillcolor=gray95
+            ]
 
-CLASSES
+            edge [
+                fontname = "Bitstream Vera Sans"
+                fontsize = 8
 
-RELATIONSHIPS
-    }
-    """
+            ]
+
+    CLASSES
+
+    RELATIONSHIPS
+        }
+        """
 
     entry_index = 2
     for _type, message in types.items():
@@ -129,6 +123,25 @@ RELATIONSHIPS
 
     uml_template = uml_template.replace("CLASSES", "\n".join(classes))
     uml_template = uml_template.replace("RELATIONSHIPS", "\n".join(relationships))
+    return uml_template
+
+
+@click.command()
+@click.option('--proto', required=True, help='Compiled Python proto module (e.g. some.package.ws_compiled_pb2).')
+@click.option('--output', type=PathPath(file_okay=False), required=True, help='Output directory.')
+def main(proto: str, output: Path):
+    proto_file = import_module(proto)
+    # a mapping with values such as 1: 'double', 9: 'string', etc.
+    # to find the text value of a type
+    type_mapping = {number: text.lower().replace("type_", "") for text, number in FieldDescriptorProto.Type.items()}
+
+    # our compiled type actually includes .DESCRIPTOR where we can find
+    # introspection data
+    types = proto_file.DESCRIPTOR.message_types_by_name
+
+    message_mapping = _get_message_mapping(types)
+
+    uml_template = _get_uml_template(types=types, type_mapping=type_mapping, message_mapping=message_mapping)
 
     src = Source(uml_template)
     src.format = "png"
