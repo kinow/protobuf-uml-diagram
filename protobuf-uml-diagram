@@ -98,8 +98,7 @@ def _get_uml_template(*, types: dict, type_mapping: dict, message_mapping: dict)
     entry_index = 2
     for _type, message in types.items():
         type_template_text = StringIO()
-        type_template_text.write(
-            f"""    {entry_index}[label = "{{{_type}|""")  # ]\n""")
+        type_template_text.write(f"""    {entry_index}[label = "{{{_type}|""")
         fields = []
         for _field in message.fields:
             message_type = _field.message_type
