@@ -1,0 +1,16 @@
+---
+cache: pip
+dist: xenial
+addons:
+  apt:
+    update: true
+
+language: python
+
+install:
+  - pip install pytest-runner pycodestyle
+  - pip install .
+
+script:
+  - pycodestyle --filename=protobuf-uml-diagram --exclude=.git,__pycache__,.tox,venv,protobuf_uml_diagram.egg-info,.pytest_cache --max-line-length=120
+  - python setup.py test
