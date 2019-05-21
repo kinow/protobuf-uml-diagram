@@ -42,6 +42,22 @@ def _get_uml_filename(module_filename) -> str:
     return Path(module_filename).stem
 
 
+def _get_message_mapping(types: dict) -> dict:
+    """
+    Return a mapping with the type as key, and the index number.
+    :param types: a dictionary of types with the type name, and the message type
+    :type types: dict
+    :return: message mapping
+    :rtype: dict
+    """
+    message_mapping = {}
+    entry_index = 2  # based on the links found, they normally start with 2?
+    for _type, message in types.items():
+        message_mapping[_type] = entry_index
+        entry_index += 1
+    return message_mapping
+
+
 @click.command()
 @click.option('--proto', required=True, help='Compiled Python proto module (e.g. some.package.ws_compiled_pb2).')
 @click.option('--output', type=PathPath(file_okay=False), required=True, help='Output directory.')
@@ -55,12 +71,7 @@ def main(proto: str, output: Path):
     # introspection data
     types = proto_file.DESCRIPTOR.message_types_by_name
 
-    message_mapping = {}
-
-    entry_index = 2
-    for _type, message in types.items():
-        message_mapping[_type] = entry_index
-        entry_index += 1
+    message_mapping = _get_message_mapping(types)
 
     relationships = []
     classes = []
