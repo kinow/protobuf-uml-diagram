@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/kinow/protobuf-uml-diagram.svg?branch=master)](https://travis-ci.org/kinow/protobuf-uml-diagram)
+[![codecov](https://codecov.io/gh/kinow/protobuf-uml-diagram/branch/master/graph/badge.svg)](https://codecov.io/gh/kinow/protobuf-uml-diagram)
+
 
 # Protobuf UML diagram
 
