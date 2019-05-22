@@ -31,6 +31,10 @@ install_requires = [
     "protobuf==3.7.*"
 ]
 
+setup_requires = [
+    'pytest-runner==4.4.*'
+]
+
 tests_require = [
     'codecov==2.0.*',
     'coverage==4.5.*',
@@ -38,6 +42,11 @@ tests_require = [
     'pytest==4.4.*',
     'pycodestyle==2.5.*'
 ]
+
+extras_require = {
+    'tests': tests_require,
+    'all': install_requires + tests_require
+}
 
 setup(
     version="0.1",
@@ -51,5 +60,7 @@ setup(
     py_modules=['protobuf_uml_diagram'],
     python_requires='>=3.7',
     install_requires=install_requires,
-    tests_require=tests_require
+    tests_require=tests_require,
+    extras_require=extras_require,
+    setup_requires=setup_requires,
 )

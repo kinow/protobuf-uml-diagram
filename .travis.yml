@@ -9,8 +9,12 @@ language: python
 
 install:
   - pip install pytest-runner pycodestyle
-  - pip install .
+  - pip install .[all]
 
 script:
   - pycodestyle --filename=protobuf-uml-diagram --exclude=.git,__pycache__,.tox,venv,protobuf_uml_diagram.egg-info,.pytest_cache --max-line-length=120
   - python setup.py test
+
+after_success:
+  - coverage xml --ignore-errors
+  - bash <(curl -s https://codecov.io/bash)
