@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/kinow/protobuf-uml-diagram.svg?branch=master)](https://travis-ci.org/kinow/protobuf-uml-diagram)
+
 # Protobuf UML diagram
 
 A tool to generate UML diagrams from Protobuf compiled .proto files.
