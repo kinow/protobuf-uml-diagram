@@ -28,7 +28,7 @@ install:
 
 script:
   - pycodestyle --filename=protobuf-uml-diagram --exclude=.git,__pycache__,.tox,venv,protobuf_uml_diagram.egg-info,.pytest_cache --max-line-length=120
-  - coverage run --source protobuf_uml_diagram test
+  - coverage run --source protobuf_uml_diagram setup.py test
 
 after_success:
   - coverage xml --ignore-errors
