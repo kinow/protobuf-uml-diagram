@@ -32,6 +32,15 @@ $ pip install .
 $ protobuf-uml-diagram
 ```
 
+## Alternative to installation
+
+Generate UML diagrams from all (uncompiled) `.proto` files in a directory:
+
+```
+./dockerbuild.sh
+./dockerrun.sh <path_containing_proto_files> <output_path>
+```
+
 ## License
 
 Apache License
