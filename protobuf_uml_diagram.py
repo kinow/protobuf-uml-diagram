@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""Generate UML diagrams with graphviz from Protobuf compiled Python modules."""
+
 import logging
 from importlib import import_module
 from io import StringIO
@@ -24,16 +26,29 @@ from google.protobuf.descriptor_pb2 import FieldDescriptorProto
 from graphviz import Source
 
 from types import ModuleType
+from typing import Union
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
+
+
+Text = Union[str, bytes]
 
 
 # https://github.com/pallets/click/issues/405#issuecomment-470812067
 class PathPath(click.Path):
     """A Click path argument that returns a pathlib Path, not a string"""
 
-    def convert(self, value, param, ctx) -> Path:
+    def convert(self, value: Text, param: Text, ctx) -> Path:
+        """Convert a text parameter into a ``Path`` object.
+
+        :param value: parameter value
+        :type value: Text
+        :param param: parameter name
+        :type param: Text
+        :return: a ``Path`` object
+        :rtype: Path
+        """
         return Path(super().convert(value, param, ctx))
 
 
@@ -132,11 +147,22 @@ def _get_uml_template(*, types: dict, type_mapping: dict, message_mapping: dict)
 
 
 def _module(proto: str) -> ModuleType:
+    """
+    Given a protobuf file location, it will replace slashes by dots, drop the
+    .proto and append _pb2.
+
+    This works for the current version of Protobuf, and loads this way the
+    Protobuf compiled Python module.
+    :param proto:
+    :return: Protobuf compiled Python module
+    :rtype: ModuleType
+    """
     return import_module(proto.replace(".proto", "_pb2").replace("/", "."))
 
 
 def _build_mappings(proto_file, types:dict, type_mapping: dict, message_mapping: dict) -> None:
-
+    """Build the mappings for the diagram.
+    """
     # a mapping with values such as 1: 'double', 9: 'string', etc.
     # to find the text value of a type
     type_mapping.update({number: text.lower().replace("type_", "") for text, number in FieldDescriptorProto.Type.items()})
