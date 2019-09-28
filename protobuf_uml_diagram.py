@@ -20,17 +20,15 @@ import logging
 from importlib import import_module
 from io import StringIO
 from pathlib import Path
+from types import ModuleType
+from typing import Union
 
 import click
 from google.protobuf.descriptor_pb2 import FieldDescriptorProto
 from graphviz import Source
 
-from types import ModuleType
-from typing import Union
-
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
-
 
 Text = Union[str, bytes]
 
@@ -41,26 +39,24 @@ class PathPath(click.Path):
 
     def convert(self, value: Text, param: Text, ctx) -> Path:
         """Convert a text parameter into a ``Path`` object.
-
         :param value: parameter value
         :type value: Text
         :param param: parameter name
         :type param: Text
+        :param ctx: context
+        :type ctx: object
         :return: a ``Path`` object
         :rtype: Path
         """
         return Path(super().convert(value, param, ctx))
 
 
-def _get_uml_filename(module_filename) -> str:
-    """
-    Return the UML file name, for a given Python module name.
-    :param module_filename: e.g. cylc.flow.ws_messages_proto.pb2.
-    :type module_filename: str
-    :return: UML file name (e.g. ws_messages_proto).
-    :rtype: str
-    """
-    return Path(module_filename).stem
+# -- mappings
+
+class Mappings:
+    types: dict = {}
+    type_mapping: dict = {}
+    message_mapping: dict = {}
 
 
 def _get_message_mapping(types: dict) -> dict:
@@ -78,6 +74,29 @@ def _get_message_mapping(types: dict) -> dict:
         entry_index += 1
     return message_mapping
 
+
+def _build_mappings(proto_file, mappings=None) -> Mappings:
+    """Build the mappings for the diagram.
+    """
+    if mappings is None:
+        mappings = Mappings()
+    # a mapping with values such as 1: 'double', 9: 'string', etc.
+    # to find the text value of a type
+    mappings.type_mapping.update(
+        {number: text.lower().replace("type_", "") for text, number in FieldDescriptorProto.Type.items()})
+
+    # our compiled type actually includes .DESCRIPTOR where we can find
+    # introspection data
+    mappings.types.update(proto_file.DESCRIPTOR.message_types_by_name)
+
+    mappings.message_mapping.update(_get_message_mapping(mappings.types))
+
+    for _dep in proto_file.DESCRIPTOR.dependencies:
+        _build_mappings(_module(_dep.name), mappings)
+    return mappings
+
+
+# -- UML diagram
 
 def _get_uml_template(*, types: dict, type_mapping: dict, message_mapping: dict) -> str:
     """
@@ -146,6 +165,8 @@ def _get_uml_template(*, types: dict, type_mapping: dict, message_mapping: dict)
     return uml_template
 
 
+# -- Protobuf Python module load
+
 def _module(proto: str) -> ModuleType:
     """
     Given a protobuf file location, it will replace slashes by dots, drop the
@@ -160,49 +181,59 @@ def _module(proto: str) -> ModuleType:
     return import_module(proto.replace(".proto", "_pb2").replace("/", "."))
 
 
-def _build_mappings(proto_file, types:dict, type_mapping: dict, message_mapping: dict) -> None:
-    """Build the mappings for the diagram.
-    """
-    # a mapping with values such as 1: 'double', 9: 'string', etc.
-    # to find the text value of a type
-    type_mapping.update({number: text.lower().replace("type_", "") for text, number in FieldDescriptorProto.Type.items()})
+# -- Diagram builder
 
-    # our compiled type actually includes .DESCRIPTOR where we can find
-    # introspection data
-    types.update(proto_file.DESCRIPTOR.message_types_by_name)
+class Diagram:
+    """A diagram builder."""
 
-    message_mapping.update(_get_message_mapping(types))
+    _proto_module: ModuleType = None
+    _rendered_filename: str = None
 
-    for _dep in proto_file.DESCRIPTOR.dependencies:
-        _build_mappings(_module(_dep.name), types, type_mapping, message_mapping)
+    def from_file(self, proto_file: str):
+        if not proto_file:
+            raise ValueError("Missing proto file!")
+        self._proto_module = _module(proto_file)
+        logger.info(f"Imported: {proto_file}")
+        return self
 
+    def to_file(self, output: Path):
+        if not output:
+            raise ValueError("Missing output location!")
+        uml_file = Path(self._proto_module.__file__).stem
+        self._rendered_filename = str(output.joinpath(uml_file))
+        return self
+
+    def build(self, file_format="png"):
+        if not self._rendered_filename:
+            raise ValueError("No output location!")
+
+        mappings = _build_mappings(self._proto_module)
+
+        uml_template = _get_uml_template(
+            types=mappings.types,
+            type_mapping=mappings.type_mapping,
+            message_mapping=mappings.message_mapping)
+
+        if logger.isEnabledFor(logging.DEBUG):
+            logger.debug("UML template:")
+            logger.debug(uml_template)
+
+        src = Source(uml_template)
+        src.format = file_format
+        logger.info(f"Writing PNG diagram to {self._rendered_filename}.png")
+        src.render(filename=self._rendered_filename, view=False, cleanup=True)
+
+
+# -- main method
 
 @click.command()
 @click.option('--proto', required=True, help='Compiled Python proto module (e.g. some.package.ws_compiled_pb2).')
 @click.option('--output', type=PathPath(file_okay=False), required=True, help='Output directory.')
 def main(proto: str, output: Path) -> None:
-    type_mapping={}
-    message_mapping={}
-    types={}
-    proto_file=_module(proto)
-    logger.info(f"Imported: {proto_file}")
-    _build_mappings(proto_file, types, type_mapping, message_mapping)
-
-    uml_template = _get_uml_template(types=types, type_mapping=type_mapping, message_mapping=message_mapping)
-
-    if logger.isEnabledFor(logging.DEBUG):
-        logger.debug("UML template:")
-        logger.debug(uml_template)
-
-    src = Source(uml_template)
-    src.format = "png"
-    rendered_filename = str(output.joinpath(_get_uml_filename(proto_file.__file__)))
-    logger.info(f"Writing PNG diagram to {rendered_filename}.png")
-    src.render(
-        filename=rendered_filename,
-        view=False,
-        cleanup=True
-    )
+    Diagram() \
+        .from_file(proto) \
+        .to_file(output) \
+        .build()
 
 
 if __name__ == '__main__':
