@@ -23,6 +23,8 @@ import click
 from google.protobuf.descriptor_pb2 import FieldDescriptorProto
 from graphviz import Source
 
+from types import ModuleType
+
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
@@ -31,7 +33,7 @@ logging.basicConfig(level=logging.INFO)
 class PathPath(click.Path):
     """A Click path argument that returns a pathlib Path, not a string"""
 
-    def convert(self, value, param, ctx):
+    def convert(self, value, param, ctx) -> Path:
         return Path(super().convert(value, param, ctx))
 
 
@@ -132,7 +134,7 @@ def _get_uml_template(*, types: dict, type_mapping: dict, message_mapping: dict)
 @click.command()
 @click.option('--proto', required=True, help='Compiled Python proto module (e.g. some.package.ws_compiled_pb2).')
 @click.option('--output', type=PathPath(file_okay=False), required=True, help='Output directory.')
-def main(proto: str, output: Path):
+def main(proto: str, output: Path) -> None:
     type_mapping={}
     message_mapping={}
     types={}
@@ -156,10 +158,10 @@ def main(proto: str, output: Path):
         cleanup=True
     )
 
-def _module(proto: str):
+def _module(proto: str) -> ModuleType:
     return import_module(proto.replace(".proto", "_pb2").replace("/", "."))
 
-def _build_mappings(proto_file, types:dict, type_mapping: dict, message_mapping: dict):
+def _build_mappings(proto_file, types:dict, type_mapping: dict, message_mapping: dict) -> None:
 
     # a mapping with values such as 1: 'double', 9: 'string', etc.
     # to find the text value of a type
