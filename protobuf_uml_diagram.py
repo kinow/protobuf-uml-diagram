@@ -137,6 +137,7 @@ def main(proto: str, output: Path):
     message_mapping={}
     types={}
     proto_file=_module(proto)
+    logger.info(f"Imported: {proto_file}")
     _build_mappings(proto_file, types, type_mapping, message_mapping)
 
     uml_template = _get_uml_template(types=types, type_mapping=type_mapping, message_mapping=message_mapping)
@@ -156,10 +157,7 @@ def main(proto: str, output: Path):
     )
 
 def _module(proto: str):
-    proto_file = import_module(proto.replace(".proto", "_pb2").replace("/", "."))
-    logger.info(f"Imported: {proto_file}")
-
-    return proto_file
+    return import_module(proto.replace(".proto", "_pb2").replace("/", "."))
 
 def _build_mappings(proto_file, types:dict, type_mapping: dict, message_mapping: dict):
 
