@@ -158,8 +158,10 @@ def main(proto: str, output: Path) -> None:
         cleanup=True
     )
 
+
 def _module(proto: str) -> ModuleType:
     return import_module(proto.replace(".proto", "_pb2").replace("/", "."))
+
 
 def _build_mappings(proto_file, types:dict, type_mapping: dict, message_mapping: dict) -> None:
 
@@ -175,6 +177,7 @@ def _build_mappings(proto_file, types:dict, type_mapping: dict, message_mapping:
 
     for _dep in proto_file.DESCRIPTOR.dependencies:
         _build_mappings(_module(_dep.name), types, type_mapping, message_mapping)
+
 
 if __name__ == '__main__':
     main()
