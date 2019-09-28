@@ -204,6 +204,8 @@ class Diagram:
         return self
 
     def build(self, file_format="png"):
+        if not self._proto_module:
+            raise ValueError("No Protobuf Python module!")
         if not self._rendered_filename:
             raise ValueError("No output location!")
 
