@@ -131,6 +131,26 @@ def _get_uml_template(*, types: dict, type_mapping: dict, message_mapping: dict)
     return uml_template
 
 
+def _module(proto: str) -> ModuleType:
+    return import_module(proto.replace(".proto", "_pb2").replace("/", "."))
+
+
+def _build_mappings(proto_file, types:dict, type_mapping: dict, message_mapping: dict) -> None:
+
+    # a mapping with values such as 1: 'double', 9: 'string', etc.
+    # to find the text value of a type
+    type_mapping.update({number: text.lower().replace("type_", "") for text, number in FieldDescriptorProto.Type.items()})
+
+    # our compiled type actually includes .DESCRIPTOR where we can find
+    # introspection data
+    types.update(proto_file.DESCRIPTOR.message_types_by_name)
+
+    message_mapping.update(_get_message_mapping(types))
+
+    for _dep in proto_file.DESCRIPTOR.dependencies:
+        _build_mappings(_module(_dep.name), types, type_mapping, message_mapping)
+
+
 @click.command()
 @click.option('--proto', required=True, help='Compiled Python proto module (e.g. some.package.ws_compiled_pb2).')
 @click.option('--output', type=PathPath(file_okay=False), required=True, help='Output directory.')
@@ -157,26 +177,6 @@ def main(proto: str, output: Path) -> None:
         view=False,
         cleanup=True
     )
-
-
-def _module(proto: str) -> ModuleType:
-    return import_module(proto.replace(".proto", "_pb2").replace("/", "."))
-
-
-def _build_mappings(proto_file, types:dict, type_mapping: dict, message_mapping: dict) -> None:
-
-    # a mapping with values such as 1: 'double', 9: 'string', etc.
-    # to find the text value of a type
-    type_mapping.update({number: text.lower().replace("type_", "") for text, number in FieldDescriptorProto.Type.items()})
-
-    # our compiled type actually includes .DESCRIPTOR where we can find
-    # introspection data
-    types.update(proto_file.DESCRIPTOR.message_types_by_name)
-
-    message_mapping.update(_get_message_mapping(types))
-
-    for _dep in proto_file.DESCRIPTOR.dependencies:
-        _build_mappings(_module(_dep.name), types, type_mapping, message_mapping)
 
 
 if __name__ == '__main__':
