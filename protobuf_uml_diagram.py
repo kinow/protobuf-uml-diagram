@@ -21,9 +21,10 @@ from importlib import import_module
 from io import StringIO
 from pathlib import Path
 from types import ModuleType
-from typing import Union
+from typing import List, Tuple, Union
 
 import click
+from google.protobuf.descriptor import Descriptor, FieldDescriptor
 from google.protobuf.descriptor_pb2 import FieldDescriptorProto
 from graphviz import Source
 
@@ -51,114 +52,81 @@ class PathPath(click.Path):
         return Path(super().convert(value, param, ctx))
 
 
-# -- mappings
-
-class Mappings:
-    types: dict = {}
-    type_mapping: dict = {}
-    message_mapping: dict = {}
-
-
-def _get_message_mapping(types: dict) -> dict:
-    """
-    Return a mapping with the type as key, and the index number.
-    :param types: a dictionary of types with the type name, and the message type
-    :type types: dict
-    :return: message mapping
-    :rtype: dict
-    """
-    message_mapping = {}
-    entry_index = 2  # based on the links found, they normally start with 2?
-    for _type, message in types.items():
-        message_mapping[_type] = entry_index
-        entry_index += 1
-    return message_mapping
-
-
-def _build_mappings(proto_file, mappings=None) -> Mappings:
-    """Build the mappings for the diagram.
-    """
-    if mappings is None:
-        mappings = Mappings()
-    # a mapping with values such as 1: 'double', 9: 'string', etc.
-    # to find the text value of a type
-    mappings.type_mapping.update(
-        {number: text.lower().replace("type_", "") for text, number in FieldDescriptorProto.Type.items()})
-
-    # our compiled type actually includes .DESCRIPTOR where we can find
-    # introspection data
-    mappings.types.update(proto_file.DESCRIPTOR.message_types_by_name)
-
-    mappings.message_mapping.update(_get_message_mapping(mappings.types))
-
-    for _dep in proto_file.DESCRIPTOR.dependencies:
-        _build_mappings(_module(_dep.name), mappings)
-    return mappings
-
-
 # -- UML diagram
 
-def _get_uml_template(*, types: dict, type_mapping: dict, message_mapping: dict) -> str:
+# These are the protobuf types. 11 is the message type, meaning another type
+TYPES_BY_NUMBER = {
+    number: text.lower().replace("type_", "")
+    for text, number in FieldDescriptorProto.Type.items()
+}
+
+
+def _process_module(proto_module: ModuleType) -> Tuple[List[str], List[str]]:
+    """"
+    :return: list of descriptors
+    :rtype: List[Descriptor]
+    """
+    classes = []
+    relationships = []
+    for type_name, type_descriptor in proto_module.DESCRIPTOR.message_types_by_name.items():
+        _process_descriptor(type_descriptor, classes, relationships)
+    return classes, relationships
+
+
+def _process_descriptor(descriptor: Descriptor, classes: list, relationships: list) -> None:
+    """
+    :param descriptor: a Protobuf descriptor
+    :type descriptor: Descriptor
+    :param classes: list of classes
+    :type classes: list
+    """
+    type_template_text = StringIO()
+    type_template_text.write(f"""    {descriptor.name}[label = "{{{descriptor.name}|""")
+    fields = []
+    for _field in descriptor.fields:
+        if _field.type == FieldDescriptor.TYPE_MESSAGE:
+            this_node = descriptor.name
+            that_node = _field.message_type.name
+            relationships.append(f"    {this_node}->{that_node}")
+            field_type = _field.message_type.name  # so we replace the 'message' token by the actual name
+        else:
+            field_type = TYPES_BY_NUMBER[_field.type]
+
+        fields.append(f"+ {_field.name}:{field_type}")
+
+    # add fields
+    type_template_text.write("\\n".join(fields))
+    type_template_text.write("}\"]")
+    classes.append(type_template_text.getvalue())
+
+    type_template_text.close()
+
+    # nested types
+    for nested_descriptor in descriptor.nested_types:
+        _process_descriptor(nested_descriptor, classes, relationships)
+    # TODO: what about extension, enum, ...?
+
+
+def _get_uml_template(proto_module: ModuleType) -> str:
     """
     Return the graphviz dot template for a UML class diagram.
-    :param types: protobuf types with indexes
-    :param type_mapping: a mapping for the protobuf type indexes and the type text
-    :param message_mapping: a dict with which messages were linked, for the relationships
+    :param proto_module: protobuf module
+    :type proto_module: ModuleType
     :return: UML template
     :rtype: str
     """
-    relationships = []
-    classes = []
-
     uml_template = """
-        digraph "Protobuf UML class diagram" {
-            fontname = "Bitstream Vera Sans"
-            fontsize = 8
+digraph "Protobuf UML class diagram" {
+    fontname="Bitstream Vera Sans"
+    fontsize=10
+    node[shape=record,style=filled,fillcolor=gray95,fontname="Bitstream Vera Sans",fontsize=8]
+    edge[fontname="Bitstream Vera Sans",fontsize=8]
 
-            node [
-                fontname = "Bitstream Vera Sans"
-                fontsize = 8
-                shape = "record"
-                style=filled
-                fillcolor=gray95
-            ]
+CLASSES
 
-            edge [
-                fontname = "Bitstream Vera Sans"
-                fontsize = 8
-
-            ]
-
-    CLASSES
-
-    RELATIONSHIPS
-        }
-        """
-
-    entry_index = 2
-    for _type, message in types.items():
-        type_template_text = StringIO()
-        type_template_text.write(f"""    {entry_index}[label = "{{{_type}|""")
-        fields = []
-        for _field in message.fields:
-            message_type = _field.message_type
-            field_type = type_mapping[_field.type]  # this will be 'message' if referencing another protobuf message
-
-            if message_type:
-                this_node = message_mapping[_type]
-                that_node = message_mapping[message_type.name]
-                relationships.append(f"    {this_node}->{that_node}")
-                field_type = message_type.name  # so we replace the 'message' token by the actual name
-
-            fields.append(f"+ {_field.name}:{field_type}")
-
-        # add fields
-        type_template_text.write("\\n".join(fields))
-        type_template_text.write("}\"]\n")
-        entry_index += 1
-        classes.append(type_template_text.getvalue())
-
-        type_template_text.close()
+RELATIONSHIPS
+}"""
+    classes, relationships = _process_module(proto_module)
 
     uml_template = uml_template.replace("CLASSES", "\n".join(classes))
     uml_template = uml_template.replace("RELATIONSHIPS", "\n".join(relationships))
@@ -209,12 +177,7 @@ class Diagram:
         if not self._rendered_filename:
             raise ValueError("No output location!")
 
-        mappings = _build_mappings(self._proto_module)
-
-        uml_template = _get_uml_template(
-            types=mappings.types,
-            type_mapping=mappings.type_mapping,
-            message_mapping=mappings.message_mapping)
+        uml_template = _get_uml_template(self._proto_module)
 
         if logger.isEnabledFor(logging.DEBUG):
             logger.debug("UML template:")
