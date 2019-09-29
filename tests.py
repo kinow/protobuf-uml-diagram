@@ -12,18 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from protobuf_uml_diagram import _get_uml_filename, _get_message_mapping
+from pathlib import Path
+
+import pytest
+
+from protobuf_uml_diagram import PathPath, Diagram
 
 
-def test_get_uml_filename():
-    assert _get_uml_filename("/tmp/name/test.txt") == "test"
+def test_path_path():
+    """Test the converter used for the command line args."""
+    path_path = PathPath()
+    path = path_path.convert(value="blue", param="color", ctx=None)
+    assert isinstance(path, Path)
 
 
-def test_get_message_mapping():
-    d = {
-        1: "blue",
-        2: "red",
-        3: "green"
-    }
-    r = _get_message_mapping(d)
-    assert {1: 2, 2: 3, 3: 4} == r
+class TestDiagramBuilder:
+
+    def test_from_file_raises(self):
+        with pytest.raises(ValueError) as e:
+            Diagram().from_file('')
+            assert 'Missing proto file' in str(e.value)
+
+    def test_to_file_raises(self):
+        with pytest.raises(ValueError) as e:
+            Diagram().to_file(None)
+            assert 'Missing output location' in str(e.value)
