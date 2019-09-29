@@ -20,6 +20,7 @@ import logging
 from importlib import import_module
 from io import StringIO
 from pathlib import Path
+from string import Template
 from types import ModuleType
 from typing import List, Tuple, Union
 
@@ -115,22 +116,21 @@ def _get_uml_template(proto_module: ModuleType) -> str:
     :return: UML template
     :rtype: str
     """
-    uml_template = """
+    classes, relationships = _process_module(proto_module)
+    uml_template = Template("""
 digraph "Protobuf UML class diagram" {
     fontname="Bitstream Vera Sans"
     fontsize=10
     node[shape=record,style=filled,fillcolor=gray95,fontname="Bitstream Vera Sans",fontsize=8]
     edge[fontname="Bitstream Vera Sans",fontsize=8]
 
-CLASSES
+$classes
 
-RELATIONSHIPS
-}"""
-    classes, relationships = _process_module(proto_module)
-
-    uml_template = uml_template.replace("CLASSES", "\n".join(classes))
-    uml_template = uml_template.replace("RELATIONSHIPS", "\n".join(relationships))
-    return uml_template
+$relationships
+}""")
+    return uml_template.substitute(
+        classes="\n".join(classes),
+        relationships="\n".join(relationships))
 
 
 # -- Protobuf Python module load
