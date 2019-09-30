@@ -21,7 +21,7 @@ INFO:__main__:Writing PNG diagram to /tmp/ws_messages_pb2.png
 
 _Image output_:
 
-![example output](example-output.png "Example output")
+![example output](https://raw.githubusercontent.com/kinow/protobuf-uml-diagram/master/example-output.png "Example output")
 
 ## Installation
 
