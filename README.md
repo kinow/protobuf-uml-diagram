@@ -1,3 +1,5 @@
+[![PyPI](https://img.shields.io/pypi/v/protobuf-uml-diagram.svg?color=yellow)](https://pypi.org/project/protobuf-uml-diagram/)
+[![License](https://img.shields.io/github/license/kinow/protobuf-uml-diagram.svg?color=lightgrey)](https://github.com/kinow/protobuf-uml-diagram/blob/master/LICENSE.txt)
 [![Build Status](https://travis-ci.org/kinow/protobuf-uml-diagram.svg?branch=master)](https://travis-ci.org/kinow/protobuf-uml-diagram)
 [![codecov](https://codecov.io/gh/kinow/protobuf-uml-diagram/branch/master/graph/badge.svg)](https://codecov.io/gh/kinow/protobuf-uml-diagram)
 
