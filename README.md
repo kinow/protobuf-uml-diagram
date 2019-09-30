@@ -26,13 +26,20 @@ _Image output_:
 ## Installation
 
 ```bash
-$ git clone https://github.com/kinow/protobuf-uml-diagram.git
-$ cd protobuf-uml-diagram
-$ pip install .
+$ pip install protobuf-uml-diagram
 $ protobuf-uml-diagram
 ```
 
-## Alternative to installation
+### Development
+
+```bash
+$ git clone https://github.com/kinow/protobuf-uml-diagram.git
+$ cd protobuf-uml-diagram
+$ pip install -e .
+$ protobuf-uml-diagram
+```
+
+### Docker
 
 Generate UML diagrams from all (uncompiled) `.proto` files in a directory:
 
