@@ -20,6 +20,8 @@ exclude_lines =
     raise NotImplementedError
     if __name__ == .__main__.:
     def parse_args
+    logger.logger
+    if logger.isEnabledFor
 fail_under=0
 ignore_errors = False
 precision=2
