@@ -1,0 +1,35 @@
+[run]
+branch=True
+cover_pylib=False
+data_file=.coverage
+disable_warnings=
+    trace-changed
+    module-not-python
+    module-not-imported
+    no-data-collected
+    module-not-measured
+    # include-ignored
+include=
+    **/protobuf_uml_diagram.py*
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    def main
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    def parse_args
+fail_under=0
+ignore_errors = False
+precision=2
+show_missing=False
+skip_covered=False
+sort=Name
+
+[html]
+directory=htmlcov
+
+[xml]
+output=coverage.xml
+package_depth=99
