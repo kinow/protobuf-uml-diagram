@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 from pathlib import Path
-
-import pytest
 from tempfile import TemporaryDirectory
 
-import os
+import pytest
+
 from protobuf_uml_diagram import PathPath, Diagram
 
 
@@ -40,6 +40,11 @@ class TestDiagramBuilder:
             Diagram().to_file(None)
         assert 'Missing output location' in str(e.value)
 
+    def test_with_format_raises(self):
+        with pytest.raises(ValueError) as e:
+            Diagram().with_format(None)
+        assert 'Missing file' in str(e.value)
+
     def test_build_raises(self):
         with pytest.raises(ValueError) as e:
             Diagram().build()
@@ -47,15 +52,24 @@ class TestDiagramBuilder:
 
         with pytest.raises(ValueError) as e:
             Diagram() \
-                .from_file('test_data.ws_messages.proto')\
+                .from_file('test_data.ws_messages.proto') \
                 .build()
         assert 'No output' in str(e.value)
+
+        with pytest.raises(ValueError) as e:
+            d = Diagram() \
+                .from_file('test_data.ws_messages.proto') \
+                .to_file(Path('abc'))
+            d._file_format = None
+            d.build()
+        assert 'No file format' in str(e.value)
 
     def test_happy_path(self):
         with TemporaryDirectory() as tmpdir:
             tf = os.path.join(tmpdir, 'diagram.png')
-            Diagram()\
-                .from_file('test_data.ws_messages.proto')\
-                .to_file(Path(tf))\
+            Diagram() \
+                .from_file('test_data.ws_messages.proto') \
+                .to_file(Path(tf)) \
+                .with_format('png') \
                 .build()
             assert os.path.getsize(tf) > 0

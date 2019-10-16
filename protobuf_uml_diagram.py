@@ -74,7 +74,8 @@ def _process_module(proto_module: ModuleType) -> Tuple[List[str], List[str]]:
     return classes, relationships
 
 
-def _process_descriptor(descriptor: Descriptor, classes: list, relationships: list) -> None:
+def _process_descriptor(descriptor: Descriptor, classes: list,
+                        relationships: list) -> None:
     """
     :param descriptor: a Protobuf descriptor
     :type descriptor: Descriptor
@@ -82,7 +83,8 @@ def _process_descriptor(descriptor: Descriptor, classes: list, relationships: li
     :type classes: list
     """
     type_template_text = StringIO()
-    type_template_text.write(f"""    {descriptor.name}[label = "{{{descriptor.name}|""")
+    type_template_text.write(
+        f"""    {descriptor.name}[label = "{{{descriptor.name}|""")
     fields = []
     for _field in descriptor.fields:
         if _field.type == FieldDescriptor.TYPE_MESSAGE:
@@ -156,6 +158,7 @@ class Diagram:
 
     _proto_module: ModuleType = None
     _rendered_filename: str = None
+    _file_format = "png"
 
     def from_file(self, proto_file: str):
         if not proto_file:
@@ -171,11 +174,19 @@ class Diagram:
         self._rendered_filename = str(output.joinpath(uml_file))
         return self
 
-    def build(self, file_format="png"):
+    def with_format(self, file_format: str):
+        if not file_format:
+            raise ValueError("Missing file format!")
+        self._file_format = file_format
+        return self
+
+    def build(self):
         if not self._proto_module:
             raise ValueError("No Protobuf Python module!")
         if not self._rendered_filename:
             raise ValueError("No output location!")
+        if not self._file_format:
+            raise ValueError("No file format!")
 
         uml_template = _get_uml_template(self._proto_module)
 
@@ -184,16 +195,19 @@ class Diagram:
             logger.debug(uml_template)
 
         src = Source(uml_template)
-        src.format = file_format
-        logger.info(f"Writing PNG diagram to {self._rendered_filename}.png")
+        src.format = self._file_format
+        logger.info(
+            f"Writing diagram to {self._rendered_filename}.{self._file_format}")
         src.render(filename=self._rendered_filename, view=False, cleanup=True)
 
 
 # -- main method
 
 @click.command()
-@click.option('--proto', required=True, help='Compiled Python proto module (e.g. some.package.ws_compiled_pb2).')
-@click.option('--output', type=PathPath(file_okay=False), required=True, help='Output directory.')
+@click.option('--proto', required=True,
+              help='Compiled Python proto module (e.g. some.package.ws_compiled_pb2).')
+@click.option('--output', type=PathPath(file_okay=False), required=True,
+              help='Output directory.')
 def main(proto: str, output: Path) -> None:
     Diagram() \
         .from_file(proto) \
