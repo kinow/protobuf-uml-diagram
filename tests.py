@@ -15,7 +15,9 @@
 from pathlib import Path
 
 import pytest
+from tempfile import TemporaryDirectory
 
+import os
 from protobuf_uml_diagram import PathPath, Diagram
 
 
@@ -31,9 +33,29 @@ class TestDiagramBuilder:
     def test_from_file_raises(self):
         with pytest.raises(ValueError) as e:
             Diagram().from_file('')
-            assert 'Missing proto file' in str(e.value)
+        assert 'Missing proto file' in str(e.value)
 
     def test_to_file_raises(self):
         with pytest.raises(ValueError) as e:
             Diagram().to_file(None)
-            assert 'Missing output location' in str(e.value)
+        assert 'Missing output location' in str(e.value)
+
+    def test_build_raises(self):
+        with pytest.raises(ValueError) as e:
+            Diagram().build()
+        assert 'No Protobuf' in str(e.value)
+
+        with pytest.raises(ValueError) as e:
+            Diagram() \
+                .from_file('test_data.ws_messages.proto')\
+                .build()
+        assert 'No output' in str(e.value)
+
+    def test_happy_path(self):
+        with TemporaryDirectory() as tmpdir:
+            tf = os.path.join(tmpdir, 'diagram.png')
+            Diagram()\
+                .from_file('test_data.ws_messages.proto')\
+                .to_file(Path(tf))\
+                .build()
+            assert os.path.getsize(tf) > 0
