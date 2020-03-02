@@ -43,7 +43,7 @@ $ protobuf-uml-diagram
 
 ### Docker
 
-Generate UML diagrams from all (uncompiled) `.proto` files in a directory:
+Generate UML diagrams from all (not compiled) `.proto` files in a directory:
 
 ```
 ./dockerbuild.sh
