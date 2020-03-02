@@ -62,6 +62,12 @@ TYPES_BY_NUMBER = {
 }
 
 
+LABELS_BY_NUMBER = {
+    number: text.lower().replace("label_", "")
+    for text, number in FieldDescriptorProto.Label.items()
+}
+
+
 def _process_module(proto_module: ModuleType) -> Tuple[List[str], List[str]]:
     """"
     :return: list of descriptors
@@ -90,6 +96,13 @@ def _process_descriptor(descriptor: Descriptor, classes: list,
         if _field.type == FieldDescriptor.TYPE_MESSAGE:
             this_node = descriptor.name
             that_node = _field.message_type.name
+
+            # is it a repeated field?
+            label = LABELS_BY_NUMBER[_field.label]
+            if label == 'repeated':
+                # TODO: change relationship type issue #6
+                pass
+
             relationships.append(f"    {this_node}->{that_node}")
             field_type = _field.message_type.name  # so we replace the 'message' token by the actual name
         else:
