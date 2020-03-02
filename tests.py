@@ -68,16 +68,6 @@ class TestDiagramBuilder:
         with TemporaryDirectory() as tmpdir:
             tf = os.path.join(tmpdir, 'diagram.png')
             Diagram() \
-                .from_file('test_data.ws_messages.proto') \
-                .to_file(Path(tf)) \
-                .with_format('png') \
-                .build()
-            assert os.path.getsize(tf) > 0
-
-    def test_happy_path_2(self):
-        with TemporaryDirectory() as tmpdir:
-            tf = os.path.join(tmpdir, 'diagram.png')
-            Diagram() \
                 .from_file('test_data.data_messages.proto') \
                 .to_file(Path(tf)) \
                 .with_format('png') \
