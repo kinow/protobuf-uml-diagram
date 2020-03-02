@@ -52,13 +52,13 @@ class TestDiagramBuilder:
 
         with pytest.raises(ValueError) as e:
             Diagram() \
-                .from_file('test_data.ws_messages.proto') \
+                .from_file('test_data.data_messages.proto') \
                 .build()
         assert 'No output' in str(e.value)
 
         with pytest.raises(ValueError) as e:
             d = Diagram() \
-                .from_file('test_data.ws_messages.proto') \
+                .from_file('test_data.data_messages.proto') \
                 .to_file(Path('abc'))
             d._file_format = None
             d.build()
