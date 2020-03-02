@@ -89,12 +89,12 @@ def _process_descriptor(descriptor: Descriptor, classes: list,
     :type classes: list
     """
     type_template_text = StringIO()
+    this_node = descriptor.name
     type_template_text.write(
-        f"""    {descriptor.name}[label = "{{{descriptor.name}|""")
+        f"""    {this_node}[label = "{{{this_node}|""")
     fields = []
     for _field in descriptor.fields:
         if _field.type == FieldDescriptor.TYPE_MESSAGE:
-            this_node = descriptor.name
             that_node = _field.message_type.name
 
             # is it a repeated field?
@@ -104,7 +104,7 @@ def _process_descriptor(descriptor: Descriptor, classes: list,
                 pass
 
             relationships.append(f"    {this_node}->{that_node}")
-            field_type = _field.message_type.name  # so we replace the 'message' token by the actual name
+            field_type = that_node  # so we replace the 'message' token by the actual name
         else:
             field_type = TYPES_BY_NUMBER[_field.type]
 
