@@ -17,7 +17,7 @@
 
 ## 0.2 (30-09-2019)
 
-- Added Dockerfile (thanks to )
+- Added Dockerfile (thanks to Chris Fesler)
 - Better support to Protobuf FieldDescriptor types
 - Add comments to code
 - Implemented a builder for parameters
