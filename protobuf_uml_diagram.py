@@ -100,7 +100,6 @@ def _process_descriptor(descriptor: Descriptor, classes: list,
             # is it a repeated field?
             label = LABELS_BY_NUMBER[_field.label]
             if label == 'repeated':
-                # TODO: change relationship type issue #6
                 relationships.append(f"    {that_node}->{this_node} [dir=backward;arrowhead=odiamond,arrowtail=normal;headlabel=\"1\";taillabel=\"0..*\"]")
             else:
                 relationships.append(f"    {this_node}->{that_node} [arrowhead=none;headlabel=\"1\";taillabel=\"1\"]")
