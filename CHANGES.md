@@ -14,6 +14,7 @@
 - Added more tests, and graphviz to CI pipeline
 - Fixed shellcheck issues in Docker commands
 - Add builder option and validation for file format (default to PNG)
+- Added support for nested messages (issue #1)
 
 ## 0.2 (30-09-2019)
 
