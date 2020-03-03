@@ -1,5 +1,7 @@
 # Changes
 
+## 0.5 (??-??-2020)
+
 ## 0.4 (03-03-2020)
 
 - More shellcheck fixes in Docker commands
