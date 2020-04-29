@@ -89,26 +89,26 @@ def _process_descriptor(descriptor: Descriptor, classes: list,
     :type classes: list
     """
     type_template_text = StringIO()
-    this_node = descriptor.name
+    this_node = descriptor.full_name
     type_template_text.write(
-        f"""    {this_node}[label = "{{{this_node}|""")
+        f"""    \"{this_node}\"[label = "{{{this_node}|""")
     fields = []
     for _field in descriptor.fields:
         if _field.type == FieldDescriptor.TYPE_MESSAGE:
-            that_node = _field.message_type.name
+            that_node = _field.message_type.full_name
 
             # is it a repeated field?
             label = LABELS_BY_NUMBER[_field.label]
             if label == 'repeated':
-                relationships.append(f"    {that_node}->{this_node} [dir=backward;arrowhead=odiamond,arrowtail=normal;headlabel=\"1\";taillabel=\"0..*\"]")
+                relationships.append(f"    \"{that_node}\"->\"{this_node}\" [dir=backward;arrowhead=odiamond,arrowtail=normal;headlabel=\"1\";taillabel=\"0..*\"]")
             else:
-                relationships.append(f"    {this_node}->{that_node} [arrowhead=none;headlabel=\"1\";taillabel=\"1\"]")
+                relationships.append(f"    \"{this_node}\"->\"{that_node}\" [arrowhead=none;headlabel=\"1\";taillabel=\"1\"]")
 
             field_type = that_node  # so we replace the 'message' token by the actual name
         else:
             field_type = TYPES_BY_NUMBER[_field.type]
 
-        fields.append(f"+ {_field.name}:{field_type}")
+        fields.append(f"+ {_field.full_name}:{field_type}")
 
     # add fields
     type_template_text.write("\\n".join(fields))
@@ -221,6 +221,7 @@ class Diagram:
               help='Compiled Python proto module (e.g. some.package.ws_compiled_pb2).')
 @click.option('--output', type=PathPath(file_okay=False), required=True,
               help='Output directory.')
+@click.option('--fullname')
 def main(proto: str, output: Path) -> None:
     Diagram() \
         .from_file(proto) \

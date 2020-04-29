@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+service Calc {
+    rpc Calc (SomeRequest) returns (Response) {}
+    rpc SingleCalc(SomeOtherRequest) returns (Response) {}
+}
+
+message SomeRequest {
+    message Shipment {
+        string key = 1;
+        string type = 2;
+
+    }
+    repeated Shipment shipments = 1;
+}
+
+message SomeOtherRequest {
+    message Shipment {
+        string key = 1;
+        string type = 2;
+    }
+    repeated Shipment shipments = 1;
+}
+
+message Response {
+    string code = 1;
+}
