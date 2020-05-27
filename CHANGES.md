@@ -1,5 +1,7 @@
 # Changes
 
+## 0.6 (??-??-2020)
+
 ## 0.5 (27-05-2020)
 
 - Support homonyms, by using protobuf full name of each entity
