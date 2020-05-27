@@ -73,3 +73,15 @@ class TestDiagramBuilder:
                 .with_format('png') \
                 .build()
             assert os.path.getsize(tf) > 0
+
+    def test_homonymous(self):
+        """A test for when you have two 'subclasses' with same names."""
+        with TemporaryDirectory() as tmpdir:
+            tf = os.path.join(tmpdir, 'diagram.png')
+            Diagram() \
+                .from_file('test_data.issue_10.proto') \
+                .to_file(Path(tf)) \
+                .with_format('png') \
+                .build()
+            assert os.path.getsize(tf) > 0
+

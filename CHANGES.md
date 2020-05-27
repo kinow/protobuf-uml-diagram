@@ -2,6 +2,9 @@
 
 ## 0.5 (??-??-2020)
 
+- Support homonyms, by using protobuf full name of each entity
+[#10](https://github.com/kinow/protobuf-uml-diagram/issues/10)
+
 ## 0.4 (03-03-2020)
 
 - More shellcheck fixes in Docker commands
