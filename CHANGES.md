@@ -1,6 +1,6 @@
 # Changes
 
-## 0.5 (??-??-2020)
+## 0.5 (27-05-2020)
 
 - Support homonyms, by using protobuf full name of each entity
 [#10](https://github.com/kinow/protobuf-uml-diagram/issues/10)
