@@ -1,5 +1,7 @@
 # Changes
 
+## 0.7 (??-??-2020)
+
 ## 0.6 (24-07-2020)
 
 - Release to include `sdist` distribution archive in PYPI
