@@ -1,6 +1,9 @@
 # Changes
 
-## 0.7 (??-??-2020)
+## 0.7 (06-10-2020)
+
+- Fix TypeError: main() got an unexpected keyword argument 'fullname'
+[#13](https://github.com/kinow/protobuf-uml-diagram/issues/13)
 
 ## 0.6 (24-07-2020)
 
