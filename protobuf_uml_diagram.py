@@ -221,7 +221,6 @@ class Diagram:
               help='Compiled Python proto module (e.g. some.package.ws_compiled_pb2).')
 @click.option('--output', type=PathPath(file_okay=False), required=True,
               help='Output directory.')
-@click.option('--fullname')
 def main(proto: str, output: Path) -> None:
     Diagram() \
         .from_file(proto) \
