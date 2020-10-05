@@ -26,21 +26,21 @@ def read(*parts):
 
 
 install_requires = [
-    "click==7.0.*",
-    "graphviz==0.10.*",
-    "protobuf==3.7.*"
+    "click==7.1.*",
+    "graphviz==0.14.*",
+    "protobuf==3.13.*"
 ]
 
 setup_requires = [
-    'pytest-runner==4.4.*'
+    'pytest-runner==4.1.*'
 ]
 
 tests_require = [
-    'codecov==2.0.*',
-    'coverage==4.5.*',
-    'pytest-cov==2.6.*',
-    'pytest==4.4.*',
-    'pycodestyle==2.5.*'
+    'codecov==2.1.*',
+    'coverage==5.3.*',
+    'pytest-cov==2.10.*',
+    'pytest==6.1.*',
+    'pycodestyle==2.6.*'
 ]
 
 extras_require = {
