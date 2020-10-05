@@ -1,5 +1,7 @@
 # Changes
 
+## 0.8 (??-??-202?)
+
 ## 0.7 (06-10-2020)
 
 - Fix TypeError: main() got an unexpected keyword argument 'fullname'
