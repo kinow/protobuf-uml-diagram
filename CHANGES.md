@@ -8,6 +8,7 @@
 - Update graphviz requirement from ==0.14.* to >=0.14,<0.17 [#16](https://github.com/kinow/protobuf-uml-diagram/pull/16)
 - Update pytest-runner requirement from ==4.1.* to >=4.1,<5.4 [#14](https://github.com/kinow/protobuf-uml-diagram/pull/14)
 - Update protobuf requirement from ==3.13.* to >=3.13,<3.16 [#17](https://github.com/kinow/protobuf-uml-diagram/pull/17)
+- Move to GitHub Actions [#19](https://github.com/kinow/protobuf-uml-diagram/issues/19)
 
 ## 0.7 (06-10-2020)
 
