@@ -2,6 +2,8 @@
 
 ## 0.8 (??-??-202?)
 
+- Added dependabot to GitHub repository [e56ca23711ac0344cbb51a3ff4f93f23c8d42a5f](https://github.com/kinow/protobuf-uml-diagram/commit/e56ca23711ac0344cbb51a3ff4f93f23c8d42a5f)
+
 ## 0.7 (06-10-2020)
 
 - Fix TypeError: main() got an unexpected keyword argument 'fullname'
