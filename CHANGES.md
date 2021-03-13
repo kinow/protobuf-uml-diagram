@@ -3,6 +3,11 @@
 ## 0.8 (??-??-202?)
 
 - Added dependabot to GitHub repository [e56ca23711ac0344cbb51a3ff4f93f23c8d42a5f](https://github.com/kinow/protobuf-uml-diagram/commit/e56ca23711ac0344cbb51a3ff4f93f23c8d42a5f)
+- Update coverage requirement from ==5.3.* to >=5.3,<5.6 [#15](https://github.com/kinow/protobuf-uml-diagram/pull/15)
+- Update pytest requirement from ==6.1.* to >=6.1,<6.3 [#18](https://github.com/kinow/protobuf-uml-diagram/pull/18)
+- Update graphviz requirement from ==0.14.* to >=0.14,<0.17 [#16](https://github.com/kinow/protobuf-uml-diagram/pull/16)
+- Update pytest-runner requirement from ==4.1.* to >=4.1,<5.4 [#14](https://github.com/kinow/protobuf-uml-diagram/pull/14)
+- Update protobuf requirement from ==3.13.* to >=3.13,<3.16 [#17](https://github.com/kinow/protobuf-uml-diagram/pull/17)
 
 ## 0.7 (06-10-2020)
 
