@@ -9,6 +9,8 @@
 - Update pytest-runner requirement from ==4.1.* to >=4.1,<5.4 [#14](https://github.com/kinow/protobuf-uml-diagram/pull/14)
 - Update protobuf requirement from ==3.13.* to >=3.13,<3.16 [#17](https://github.com/kinow/protobuf-uml-diagram/pull/17)
 - Move to GitHub Actions [#19](https://github.com/kinow/protobuf-uml-diagram/issues/19)
+- Update pycodestyle requirement from ==2.6.* to >=2.6,<2.8 #22 [#22](https://github.com/kinow/protobuf-uml-diagram/pull/22)
+- Update pytest-cov requirement from ==2.10.* to >=2.10,<2.12 [#21](https://github.com/kinow/protobuf-uml-diagram/pull/21) 
 
 ## 0.7 (06-10-2020)
 
