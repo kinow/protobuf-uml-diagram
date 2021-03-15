@@ -40,7 +40,7 @@ tests_require = [
     'coverage>=5.3,<5.6',
     'pytest-cov==2.10.*',
     'pytest>=6.1,<6.3',
-    'pycodestyle==2.6.*'
+    'pycodestyle>=2.6,<2.8'
 ]
 
 extras_require = {
