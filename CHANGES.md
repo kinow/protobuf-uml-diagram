@@ -13,6 +13,7 @@
 - Update pytest-cov requirement from ==2.10.* to >=2.10,<2.12 [#21](https://github.com/kinow/protobuf-uml-diagram/pull/21)
 - Update protobuf requirement from <3.16,>=3.13 to >=3.13,<3.17 [#23](https://github.com/kinow/protobuf-uml-diagram/pull/23)
 - Update click requirement from ==7.1.* to >=7.1,<8.1 [#24](https://github.com/kinow/protobuf-uml-diagram/pull/24)
+- Update protobuf requirement from <3.17,>=3.13 to >=3.13,<3.18 [#25](https://github.com/kinow/protobuf-uml-diagram/pull/25)
 
 ## 0.7 (06-10-2020)
 
