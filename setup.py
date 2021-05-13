@@ -28,7 +28,7 @@ def read(*parts):
 install_requires = [
     "click>=7.1,<8.1",
     "graphviz>=0.14,<0.17",
-    "protobuf>=3.13,<3.17"
+    "protobuf>=3.13,<3.18"
 ]
 
 setup_requires = [
