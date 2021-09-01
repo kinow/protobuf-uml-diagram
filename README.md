@@ -3,6 +3,7 @@
 [![CI](https://github.com/kinow/protobuf-uml-diagram/actions/workflows/main.yml/badge.svg?branch=master&event=push)](https://github.com/kinow/protobuf-uml-diagram/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/kinow/protobuf-uml-diagram/branch/master/graph/badge.svg)](https://codecov.io/gh/kinow/protobuf-uml-diagram)
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/X8X1618T2)
 
 # Protobuf UML diagram
 
