@@ -85,3 +85,14 @@ class TestDiagramBuilder:
                 .build()
             assert os.path.getsize(tf) > 0
 
+    def test_contains_dot_proto_in_middle_of_the_name(self):
+        """A test where the input data contains .proto, but doesn't end with it."""
+        with TemporaryDirectory() as tmpdir:
+            tf = os.path.join(tmpdir, 'diagram.png')
+            Diagram() \
+                .from_file('test_data.issue_27.proto.configs_data_pb2') \
+                .to_file(Path(tf)) \
+                .with_format('png') \
+                .build()
+            assert os.path.getsize(tf) > 0
+
