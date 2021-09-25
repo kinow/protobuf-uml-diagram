@@ -1,6 +1,6 @@
 # Changes
 
-## 0.8 (??-??-202?)
+## 0.8 (25-09-2021)
 
 - Added dependabot to GitHub repository [e56ca23711ac0344cbb51a3ff4f93f23c8d42a5f](https://github.com/kinow/protobuf-uml-diagram/commit/e56ca23711ac0344cbb51a3ff4f93f23c8d42a5f)
 - Update coverage requirement from ==5.3.* to >=5.3,<5.6 [#15](https://github.com/kinow/protobuf-uml-diagram/pull/15)
