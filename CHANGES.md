@@ -16,7 +16,9 @@
 - Update protobuf requirement from <3.17,>=3.13 to >=3.13,<3.18 [#25](https://github.com/kinow/protobuf-uml-diagram/pull/25)
 - Update pytest-cov requirement from <2.12,>=2.10 to >=2.10,<2.13 [#26](https://github.com/kinow/protobuf-uml-diagram/pull/26)
 - Update graphviz requirement from <0.17,>=0.14 to >=0.14,<0.18 [#28](https://github.com/kinow/protobuf-uml-diagram/pull/28)
--  Update protobuf requirement from <3.18,>=3.13 to >=3.13,<3.19 [#29](https://github.com/kinow/protobuf-uml-diagram/pull/29)
+- Update protobuf requirement from <3.18,>=3.13 to >=3.13,<3.19 [#29](https://github.com/kinow/protobuf-uml-diagram/pull/29)
+- Fix when a module contains .proto within its name, but doesn't necessarily end with .proto
+[#27](https://github.com/kinow/protobuf-uml-diagram/issues/27)
 
 ## 0.7 (06-10-2020)
 
