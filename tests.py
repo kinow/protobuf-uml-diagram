@@ -85,6 +85,13 @@ class TestDiagramBuilder:
                 .build()
             assert os.path.getsize(tf) > 0
 
+    def test_logs_module_not_found(self):
+        with pytest.raises(ModuleNotFoundError) as e:
+            Diagram() \
+                .from_file('piracicaba') \
+                .build()
+        assert 'piracicaba' in str(e)
+
     def test_contains_dot_proto_in_middle_of_the_name(self):
         """A test where the input data contains .proto, but doesn't end with it."""
         with TemporaryDirectory() as tmpdir:
