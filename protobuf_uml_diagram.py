@@ -161,7 +161,11 @@ def _module(proto: str) -> ModuleType:
     :return: Protobuf compiled Python module
     :rtype: ModuleType
     """
-    return import_module(proto.replace(".proto", "_pb2").replace("/", "."))
+    if proto.endswith('.proto'):
+        no_extension = f'{proto[:-len(".proto")]}_pb2'
+    else:
+        no_extension = proto
+    return import_module(no_extension.replace("/", "."))
 
 
 # -- Diagram builder
@@ -176,7 +180,11 @@ class Diagram:
     def from_file(self, proto_file: str):
         if not proto_file:
             raise ValueError("Missing proto file!")
-        self._proto_module = _module(proto_file)
+        try:
+            self._proto_module = _module(proto_file)
+        except ModuleNotFoundError as e:
+            logger.error(f'Failed to import {proto_file}')
+            raise e
         logger.info(f"Imported: {proto_file}")
         return self
 
