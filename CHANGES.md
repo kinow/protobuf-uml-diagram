@@ -2,8 +2,8 @@
 
 ## 0.9 (??-??-20??)
 
-- 
-Update pytest-cov requirement from <2.13,>=2.10 to >=2.10,<3.1 [#32](https://github.com/kinow/protobuf-uml-diagram/pull/32)
+- Update pytest-cov requirement from <2.13,>=2.10 to >=2.10,<3.1 [#32](https://github.com/kinow/protobuf-uml-diagram/pull/32)
+- Update coverage requirement from <5.6,>=5.3 to >=5.3,<6.1 [#31](https://github.com/kinow/protobuf-uml-diagram/pull/31)
 
 ## 0.8 (25-09-2021)
 
