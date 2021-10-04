@@ -2,6 +2,9 @@
 
 ## 0.9 (??-??-20??)
 
+- 
+Update pytest-cov requirement from <2.13,>=2.10 to >=2.10,<3.1 [#32](https://github.com/kinow/protobuf-uml-diagram/pull/32)
+
 ## 0.8 (25-09-2021)
 
 - Added dependabot to GitHub repository [e56ca23711ac0344cbb51a3ff4f93f23c8d42a5f](https://github.com/kinow/protobuf-uml-diagram/commit/e56ca23711ac0344cbb51a3ff4f93f23c8d42a5f)
