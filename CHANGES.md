@@ -4,7 +4,8 @@
 
 - Update pytest-cov requirement from <2.13,>=2.10 to >=2.10,<3.1 [#32](https://github.com/kinow/protobuf-uml-diagram/pull/32)
 - Update coverage requirement from <5.6,>=5.3 to >=5.3,<6.1 [#31](https://github.com/kinow/protobuf-uml-diagram/pull/31)
-- Update pycodestyle requirement from <2.8,>=2.6 to >=2.6,<2.9 [#33]((https://github.com/kinow/protobuf-uml-diagram/pull/33)
+- Update pycodestyle requirement from <2.8,>=2.6 to >=2.6,<2.9 [#33](https://github.com/kinow/protobuf-uml-diagram/pull/33)
+- Update protobuf requirement from <3.19,>=3.13 to >=3.13,<3.20 [#35](https://github.com/kinow/protobuf-uml-diagram/pull/35)
 
 ## 0.8 (25-09-2021)
 
