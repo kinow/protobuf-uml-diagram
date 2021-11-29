@@ -9,6 +9,7 @@
 - Update coverage requirement from <6.1,>=5.3 to >=5.3,<6.2 [#36](https://github.com/kinow/protobuf-uml-diagram/pull/36)
 - Update graphviz requirement from <0.18,>=0.14 to >=0.14,<0.19 [#37](https://github.com/kinow/protobuf-uml-diagram/pull/37)
 - Update coverage requirement from <6.2,>=5.3 to >=5.3,<6.3 [#39](https://github.com/kinow/protobuf-uml-diagram/pull/39)
+- Update graphviz requirement from <0.19,>=0.14 to >=0.14,<0.20 [#38](https://github.com/kinow/protobuf-uml-diagram/pull/38)
 
 ## 0.8 (25-09-2021)
 
