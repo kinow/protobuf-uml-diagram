@@ -37,7 +37,7 @@ setup_requires = [
 
 tests_require = [
     'codecov==2.1.*',
-    'coverage>=5.3,<6.3',
+    'coverage>=5.3,<6.4',
     'pytest-cov>=2.10,<3.1',
     'pytest>=6.1,<6.3',
     'pycodestyle>=2.6,<2.9'
