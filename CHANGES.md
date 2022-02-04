@@ -3,6 +3,7 @@
 ## 0.10 (??-??-20??)
 
 - Update coverage requirement from <6.3,>=5.3 to >=5.3,<6.4 [#41](https://github.com/kinow/protobuf-uml-diagram/pull/41)
+- Added a TL;DR section to the `README.md` file [#40](https://github.com/kinow/protobuf-uml-diagram/issues/40)
 
 ## 0.9 (08-12-2021)
 
