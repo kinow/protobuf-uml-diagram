@@ -26,6 +26,25 @@ _Image output_:
 
 ![example output](https://raw.githubusercontent.com/kinow/protobuf-uml-diagram/master/example-output.png "Example output")
 
+## TL;DR
+
+```bash
+$ pip install protobuf-uml-diagram
+(…)
+$ file issue_10.proto  # See ./test_data/ or use your own .proto file.
+issue_10.proto: ASCII text
+$ protoc --python_out=./ issue_10.proto
+$ # The line below modifies PYTHONPATH, which is not necessary if you have a valid Python module/package.
+$ PYTHONPATH=. protobuf-uml-diagram --proto issue_10_pb2 --output /tmp
+INFO:protobuf_uml_diagram:Imported: issue_10_pb2
+INFO:protobuf_uml_diagram:Writing diagram to /tmp/issue_10_pb2.png
+$ eog /tmp/issue_10_pb2.png
+```
+
+Running the command above should create a final image with your diagram as seen below.
+
+![](./.github/docs/issue_10_pb2.png)
+
 ## Installation
 
 ```bash
