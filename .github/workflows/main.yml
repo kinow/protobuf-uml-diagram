@@ -67,6 +67,7 @@ jobs:
       - name: Docker build and run
         run: |
           bash dockerbuild.sh
-          bash dockerrun.sh $(pwd)/test_data/ /tmp/out
+          mkdir -p $(pwd)/test_data/out
+          bash dockerrun.sh $(pwd -P)/test_data/ $(pwd)/test_data/out
 
 # TODO: publish to PYPI in GH actions? see skosmos-client & other natlib workflows
