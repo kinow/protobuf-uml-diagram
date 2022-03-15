@@ -56,4 +56,17 @@ jobs:
         coverage combine
         coverage xml --ignore-errors
         bash <(curl -s https://codecov.io/bash)
+  docker:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        os: [ 'ubuntu-latest' ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Docker build and run
+        run: |
+          bash dockerbuild.sh
+          bash dockerrun.sh $(pwd)/test_data/ /tmp/out
+
 # TODO: publish to PYPI in GH actions? see skosmos-client & other natlib workflows
