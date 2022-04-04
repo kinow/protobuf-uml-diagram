@@ -9,6 +9,7 @@
 - Update pytest requirement from <7.1,>=6.1 to >=6.1,<7.2 [#44](https://github.com/kinow/protobuf-uml-diagram/pull/44)
 - dockerrun.sh gives an error [#45](https://github.com/kinow/protobuf-uml-diagram/issues/45)
 - Update click requirement from <8.1,>=7.1 to >=7.1,<8.2 [#48](https://github.com/kinow/protobuf-uml-diagram/issues/48)
+- Update protobuf requirement from <3.20,>=3.13 to >=3.13,<3.21 [#49](https://github.com/kinow/protobuf-uml-diagram/issues/49)
 
 ## 0.9 (08-12-2021)
 
