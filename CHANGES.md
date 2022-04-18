@@ -1,5 +1,7 @@
 # Changes
 
+## 0.11 (??/??/20??)
+
 ## 0.10 (18/04/2022)
 
 - Update coverage requirement from <6.3,>=5.3 to >=5.3,<6.4 [#41](https://github.com/kinow/protobuf-uml-diagram/pull/41)
