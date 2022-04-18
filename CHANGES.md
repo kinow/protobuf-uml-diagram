@@ -10,6 +10,7 @@
 - dockerrun.sh gives an error [#45](https://github.com/kinow/protobuf-uml-diagram/issues/45)
 - Update click requirement from <8.1,>=7.1 to >=7.1,<8.2 [#48](https://github.com/kinow/protobuf-uml-diagram/issues/48)
 - Update protobuf requirement from <3.20,>=3.13 to >=3.13,<3.21 [#49](https://github.com/kinow/protobuf-uml-diagram/issues/49)
+- Update graphviz requirement from <0.20,>=0.14 to >=0.14,<0.21 [#50](https://github.com/kinow/protobuf-uml-diagram/issues/50)
 
 ## 0.9 (08-12-2021)
 
