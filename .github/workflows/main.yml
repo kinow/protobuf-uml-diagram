@@ -12,6 +12,7 @@ jobs:
     timeout-minutes: 15
     env:
       PYTHON_COVERAGE_ENABLED: '3.8'
+      PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: python
     strategy:
       matrix:
         os: [ 'ubuntu-latest' ]
