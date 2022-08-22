@@ -50,7 +50,7 @@ extras_require = {
 }
 
 setup(
-    version="0.11.dev0",
+    version="0.11",
     name="protobuf-uml-diagram",
     description="Create UML diagrams from Protobuf proto files",
     long_description=open('README.md').read(),
