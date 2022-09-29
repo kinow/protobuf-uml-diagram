@@ -2,6 +2,8 @@
 
 ## 0.12 (??/??/20??)
 
+- Update pytest-cov requirement from <3.1,>=2.10 to >=2.10,<4.1 #54
+
 ## 0.11 (22/08/2022)
 
 - Update coverage requirement from <6.4,>=5.3 to >=5.3,<6.5 #51
