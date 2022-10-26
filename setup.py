@@ -40,7 +40,7 @@ tests_require = [
     'coverage>=5.3,<6.6',
     'pytest-cov>=2.10,<4.1',
     'pytest-env>=0.6,<0.9',
-    'pytest>=6.1,<7.2',
+    'pytest>=6.1,<7.3',
     'pycodestyle>=2.6,<2.10'
 ]
 
