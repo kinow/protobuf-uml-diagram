@@ -6,6 +6,7 @@
 - Update coverage requirement from <6.5,>=5.3 to >=5.3,<6.6 #55
 - Update pytest-env requirement from ==0.6.* to >=0.6,<0.9 #56
 - Update pytest requirement from <7.2,>=6.1 to >=6.1,<7.3 #57
+- Update pycodestyle requirement from <2.10,>=2.6 to >=2.6,<2.11 #58
 
 ## 0.11 (22/08/2022)
 
