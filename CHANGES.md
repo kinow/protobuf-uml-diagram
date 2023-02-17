@@ -9,6 +9,7 @@
 - Update pycodestyle requirement from <2.10,>=2.6 to >=2.6,<2.11 #58
 - Update coverage requirement from <6.6,>=5.3 to >=5.3,<7.1 #59
 - Update coverage requirement from <7.1,>=5.3 to >=5.3,<7.2 #60
+- Update protobuf requirement from <4.22,>=3.13 to >=3.13,<4.23 #61
 
 ## 0.11 (22/08/2022)
 
