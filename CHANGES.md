@@ -2,6 +2,8 @@
 
 ## 0.13 (??/??/202?)
 
+- Update pytest requirement from <7.3,>=6.1 to >=6.1,<7.4 #65
+
 ## 0.12 (11/03/2023)
 
 - Update pytest-cov requirement from <3.1,>=2.10 to >=2.10,<4.1 #54
