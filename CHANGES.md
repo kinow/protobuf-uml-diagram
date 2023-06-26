@@ -5,6 +5,7 @@
 - Update pytest requirement from <7.3,>=6.1 to >=6.1,<7.4 #65
 - Update protobuf requirement from <4.23,>=3.13 to >=3.13,<4.24 #66
 - Update pytest-cov requirement from <4.1,>=2.10 to >=2.10,<4.2 #67
+- Update pytest requirement from <7.4,>=6.1 to >=6.1,<7.5 #68
 
 ## 0.12 (11/03/2023)
 
