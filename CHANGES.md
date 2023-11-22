@@ -12,6 +12,7 @@
 - Update pytest-env requirement from <0.9,>=0.6 to >=0.6,<1.1 #72
 - Update pytest-env requirement from <1.1,>=0.6 to >=0.6,<1.2 #73
 - Update protobuf requirement from <4.25,>=3.13 to >=3.13,<4.26 #74
+- Add mypy #76
 
 ## 0.12 (11/03/2023)
 

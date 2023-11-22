@@ -19,38 +19,38 @@
 import logging
 from importlib import import_module
 from io import StringIO
+from os import PathLike
 from pathlib import Path
 from string import Template
 from types import ModuleType
-from typing import List, Tuple, Union
+from typing import cast, List, Optional, Tuple, Union
 
 import click
 from google.protobuf.descriptor import Descriptor, FieldDescriptor
 from google.protobuf.descriptor_pb2 import FieldDescriptorProto
-from graphviz import Source
+from graphviz import Source  # type: ignore  # TODO: https://github.com/xflr6/graphviz/issues/203
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
-
-Text = Union[str, bytes]
 
 
 # https://github.com/pallets/click/issues/405#issuecomment-470812067
 class PathPath(click.Path):
     """A Click path argument that returns a pathlib Path, not a string"""
 
-    def convert(self, value: Text, param: Text, ctx) -> Path:
+    def convert(self, value: Union[str, PathLike], param: Optional[click.Parameter], ctx: Union[click.Context, None]) -> Path:
         """Convert a text parameter into a ``Path`` object.
         :param value: parameter value
-        :type value: Text
+        :type value: str
         :param param: parameter name
-        :type param: Text
+        :type param: str
         :param ctx: context
-        :type ctx: object
+        :type ctx: click.Context
         :return: a ``Path`` object
         :rtype: Path
         """
-        return Path(super().convert(value, param, ctx))
+        p = super().convert(value, param, ctx)
+        return Path(cast(Path, p))
 
 
 # -- UML diagram
@@ -73,15 +73,15 @@ def _process_module(proto_module: ModuleType) -> Tuple[List[str], List[str]]:
     :return: list of descriptors
     :rtype: List[Descriptor]
     """
-    classes = []
-    relationships = []
+    classes: List[str] = []
+    relationships: List[str] = []
     for type_name, type_descriptor in proto_module.DESCRIPTOR.message_types_by_name.items():
         _process_descriptor(type_descriptor, classes, relationships)
     return classes, relationships
 
 
-def _process_descriptor(descriptor: Descriptor, classes: list,
-                        relationships: list) -> None:
+def _process_descriptor(descriptor: Descriptor, classes: List[str],
+                        relationships: List[str]) -> None:
     """
     :param descriptor: a Protobuf descriptor
     :type descriptor: Descriptor
@@ -173,8 +173,8 @@ def _module(proto: str) -> ModuleType:
 class Diagram:
     """A diagram builder."""
 
-    _proto_module: ModuleType = None
-    _rendered_filename: str = None
+    _proto_module: Union[ModuleType, None] = None
+    _rendered_filename: Union[str, None] = None
     _file_format = "png"
 
     def from_file(self, proto_file: str):
@@ -191,6 +191,8 @@ class Diagram:
     def to_file(self, output: Path):
         if not output:
             raise ValueError("Missing output location!")
+        if not self._proto_module or not self._proto_module.__file__:
+            raise ValueError("Missing protobuf module!")
         uml_file = Path(self._proto_module.__file__).stem
         self._rendered_filename = str(output.joinpath(uml_file))
         return self

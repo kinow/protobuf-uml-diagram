@@ -15,7 +15,7 @@
 import codecs
 from os.path import join, dirname, abspath
 
-from setuptools import setup
+from setuptools import setup  # type: ignore
 
 here = abspath(dirname(__file__))
 
@@ -35,6 +35,11 @@ setup_requires = [
     'pytest-runner>=4.1,<6.1'
 ]
 
+mypy_requires = [
+    'mypy==1.*',
+    'types-protobuf==4.24.*'
+]
+
 tests_require = [
     'codecov==2.1.*',
     'coverage>=5.3,<7.4',
@@ -46,7 +51,7 @@ tests_require = [
 
 extras_require = {
     'tests': tests_require,
-    'all': install_requires + tests_require
+    'all': install_requires + tests_require + mypy_requires
 }
 
 setup(

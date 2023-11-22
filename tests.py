@@ -37,12 +37,12 @@ class TestDiagramBuilder:
 
     def test_to_file_raises(self):
         with pytest.raises(ValueError) as e:
-            Diagram().to_file(None)
+            Diagram().to_file(None)  # type: ignore
         assert 'Missing output location' in str(e.value)
 
     def test_with_format_raises(self):
         with pytest.raises(ValueError) as e:
-            Diagram().with_format(None)
+            Diagram().with_format(None)  # type: ignore
         assert 'Missing file' in str(e.value)
 
     def test_build_raises(self):
