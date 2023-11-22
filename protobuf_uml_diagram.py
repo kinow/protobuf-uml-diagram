@@ -88,7 +88,6 @@ def _get_field_name(descriptor: Descriptor, full_names=True) -> str:
     return descriptor.name
 
 
-
 def _process_descriptor(
         descriptor: Descriptor, classes: List[str],
         relationships: List[str],
@@ -102,7 +101,6 @@ def _process_descriptor(
     :type full_names: bool
     """
     # Here users are able to choose between ClassName.type_name (full name included) or just type_name
-
 
     type_template_text = StringIO()
     this_node = _get_field_name(descriptor, full_names=full_names)
@@ -256,7 +254,8 @@ class Diagram:
               help='Compiled Python proto module (e.g. some.package.ws_compiled_pb2).')
 @click.option('--output', type=PathPath(file_okay=False), required=True,
               help='Output directory.')
-@click.option('--full_names', type=bool, required=False, default=True, help='Use full names (Class.type) or not (type) in diagram.')
+@click.option('--full_names', type=bool, required=False, default=True,
+              help='Use full names (Class.type) or not (type) in diagram.')
 def main(proto: str, output: Path, full_names: bool) -> None:
     Diagram() \
         .from_file(proto) \
