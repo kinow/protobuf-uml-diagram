@@ -45,7 +45,7 @@ Running the command above should create a final image with your diagram as seen 
 
 ![](./.github/docs/issue_10_pb2.png)
 
-Note that by default it uses the full name of the types (e.g. `SomeRequest.shipments`).
+By default, it uses the full name of the types (e.g. `SomeRequest.shipments`).
 If you would like to use simpler names (i.e. `shipments`) you can use the option added
 in 0.13 `--full_names=true|false` (it is `true` by default for backward compatibility).
 
