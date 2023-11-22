@@ -14,6 +14,7 @@
 - Update protobuf requirement from <4.25,>=3.13 to >=3.13,<4.26 #74
 - Add mypy #76
 - pytest: Ignore protobuf warnings #77
+- Allow users to choose between full or simple names for fields #75 #79
 
 ## 0.12 (11/03/2023)
 
