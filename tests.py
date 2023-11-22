@@ -103,3 +103,27 @@ class TestDiagramBuilder:
                 .build()
             assert os.path.getsize(tf) > 0
 
+
+    def test_to_file_with_missing_protobuf(self):
+        """A test where the protobuf module is missing."""
+        with TemporaryDirectory() as tmpdir:
+            tf = os.path.join(tmpdir, 'diagram.png')
+            d = Diagram().from_file('test_data.issue_27.proto.configs_data_pb2')
+            d._proto_module = None
+            with pytest.raises(ValueError) as cm:
+                d.to_file(Path(tf))
+            assert str(cm.value) == 'Missing protobuf module!'
+
+
+    def test_to_file_with_protobuf_missing_file(self):
+        """A test where the protobuf module is present but invalid (no file)."""
+        with TemporaryDirectory() as tmpdir:
+            tf = os.path.join(tmpdir, 'diagram.png')
+            d = Diagram().from_file('test_data.issue_27.proto.configs_data_pb2')
+            d._proto_module = {}
+            with pytest.raises(ValueError) as cm:
+                d.to_file(Path(tf))
+            assert str(cm.value) == 'Missing protobuf module!'
+
+
+
