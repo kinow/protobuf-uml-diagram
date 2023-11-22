@@ -1,6 +1,6 @@
 # Changes
 
-## 0.13 (??/??/202?)
+## 0.13 (22/11/2023)
 
 - Update pytest requirement from <7.3,>=6.1 to >=6.1,<7.4 #65
 - Update protobuf requirement from <4.23,>=3.13 to >=3.13,<4.24 #66
