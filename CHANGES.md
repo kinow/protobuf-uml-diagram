@@ -7,31 +7,24 @@
 
 ## 0.13 (22/11/2023)
 
-- Update pytest requirement from <7.3,>=6.1 to >=6.1,<7.4 #65
-- Update protobuf requirement from <4.23,>=3.13 to >=3.13,<4.24 #66
-- Update pytest-cov requirement from <4.1,>=2.10 to >=2.10,<4.2 #67
-- Update pytest requirement from <7.4,>=6.1 to >=6.1,<7.5 #68
-- Update pycodestyle requirement from <2.11,>=2.6 to >=2.6,<2.12 #69
-- Update protobuf requirement from <4.24,>=3.13 to >=3.13,<4.25 #70
-- Update coverage requirement from <7.3,>=5.3 to >=5.3,<7.4 #71
-- Update pytest-env requirement from <0.9,>=0.6 to >=0.6,<1.1 #72
-- Update pytest-env requirement from <1.1,>=0.6 to >=0.6,<1.2 #73
-- Update protobuf requirement from <4.25,>=3.13 to >=3.13,<4.26 #74
 - Add mypy #76
-- pytest: Ignore protobuf warnings #77
 - Allow users to choose between full or simple names for fields #75 #79
+- pytest: Ignore protobuf warnings #77
+- Update coverage requirement from <7.3,>=5.3 to >=5.3,<7.4 #71
+- Update pycodestyle requirement from <2.11,>=2.6 to >=2.6,<2.12 #69
+- Update pytest requirement from <7.3,>=6.1 to >=6.1,<7.5 #65, #68
+- Update pytest-cov requirement from <4.1,>=2.10 to >=2.10,<4.2 #67
+- Update pytest-env requirement from <0.9,>=0.6 to >=0.6,<1.2 #72, #73
+- Update protobuf requirement from <4.23,>=3.13 to >=3.13,<4.26 #66, #70, #74
 
 ## 0.12 (11/03/2023)
 
+- Update coverage requirement from <6.5,>=5.3 to >=5.3,<7.3 #55, #59, #60, #64
 - Update pytest-cov requirement from <3.1,>=2.10 to >=2.10,<4.1 #54
-- Update coverage requirement from <6.5,>=5.3 to >=5.3,<6.6 #55
 - Update pytest-env requirement from ==0.6.* to >=0.6,<0.9 #56
 - Update pytest requirement from <7.2,>=6.1 to >=6.1,<7.3 #57
 - Update pycodestyle requirement from <2.10,>=2.6 to >=2.6,<2.11 #58
-- Update coverage requirement from <6.6,>=5.3 to >=5.3,<7.1 #59
-- Update coverage requirement from <7.1,>=5.3 to >=5.3,<7.2 #60
 - Update protobuf requirement from <4.22,>=3.13 to >=3.13,<4.23 #61
-- Update coverage requirement from <7.2,>=5.3 to >=5.3,<7.3 #64
 
 ## 0.11 (22/08/2022)
 
