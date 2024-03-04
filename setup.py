@@ -46,7 +46,7 @@ tests_require = [
     'pytest-cov>=2.10,<4.2',
     'pytest-env==0.6,<1.2',
     'pytest-mock>=3.11,<3.13',
-    'pytest>=6.1,<8.1',
+    'pytest>=6.1,<8.2',
     'pycodestyle>=2.6,<2.12'
 ]
 
