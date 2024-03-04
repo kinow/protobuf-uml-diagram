@@ -3,7 +3,7 @@
 ## 0.14 (??/??/20??)
 
 - Update coverage requirement from <7.4,>=5.3 to >=5.3,<7.5 #82
-- Update pytest requirement from <7.5,>=6.1 to >=6.1,<8.1 #83
+- Update pytest requirement from <7.5,>=6.1 to >=6.1,<8.2 #83, #84
 
 ## 0.13 (22/11/2023)
 
