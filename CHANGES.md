@@ -5,6 +5,7 @@
 - Update coverage requirement from <7.4,>=5.3 to >=5.3,<7.5 #82
 - Update protobuf requirement from <4.26,>=3.13 to >=3.13,<5.27 #85
 - Update pytest requirement from <7.5,>=6.1 to >=6.1,<8.2 #83, #84
+- Update pytest-mock requirement from <3.13,>=3.11 to >=3.11,<3.15 #86
 
 ## 0.13 (22/11/2023)
 
