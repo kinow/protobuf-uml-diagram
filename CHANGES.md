@@ -4,10 +4,12 @@
 
 - Update coverage requirement from <7.4,>=5.3 to >=5.3,<7.6 #82 #90
 - Update protobuf requirement from <4.26,>=3.13 to >=3.13,<5.27 #85
-- Update pytest requirement from <7.5,>=6.1 to >=6.1,<8.2 #83, #84
+- Update pytest requirement from <7.5,>=6.1 to >=6.1,<8.3 #83, #84, #91
 - Update pytest-cov requirement from <4.2,>=2.10 to >=2.10,<5.1 #87
 - Update pytest-mock requirement from <3.13,>=3.11 to >=3.11,<3.15 #86
 - Update types-protobuf requirement from ==4.24.* to >=4.24,<5.27 #88, #89
+- Use codecov GH Action instead of Shell, use GH Secret #91
+- Set GH Action checkout depth to 2 to fix Codecov error #91
 
 ## 0.13 (22/11/2023)
 
