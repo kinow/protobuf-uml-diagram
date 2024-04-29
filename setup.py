@@ -44,7 +44,7 @@ tests_require = [
     'codecov==2.1.*',
     'coverage>=5.3,<7.6',
     'pytest-cov>=2.10,<5.1',
-    'pytest-env==0.6,<1.2',
+    'pytest-env==1.1.3',
     'pytest-mock>=3.11,<3.15',
     'pytest>=6.1,<8.3',
     'pycodestyle>=2.6,<2.12'
