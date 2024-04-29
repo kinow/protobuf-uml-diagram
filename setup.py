@@ -65,7 +65,7 @@ setup(
         "console_scripts": ["protobuf-uml-diagram=protobuf_uml_diagram:main"]
     },
     py_modules=['protobuf_uml_diagram'],
-    python_requires='>=3.7',
+    python_requires='>=3.8',
     install_requires=install_requires,
     tests_require=tests_require,
     extras_require=extras_require,
