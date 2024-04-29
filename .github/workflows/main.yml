@@ -58,10 +58,9 @@ jobs:
         coverage run -p protobuf_uml_diagram.py --proto test_data/issue_10.proto --output /tmp
     - name: Coverage
       if: ${{ success() &&  matrix.python == env.PYTHON_COVERAGE_ENABLED }}
-      run: |
-        coverage combine
-        coverage xml --ignore-errors
-        bash <(curl -s https://codecov.io/bash)
+      uses: codecov/codecov-action@v4
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
   docker:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
