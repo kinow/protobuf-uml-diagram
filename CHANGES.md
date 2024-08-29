@@ -3,7 +3,7 @@
 ## 0.14 (??/??/20??)
 
 - Update coverage requirement from <7.4,>=5.3 to >=5.3,<7.7 #82, #90, #95
-- Update protobuf requirement from <4.26,>=3.13 to >=4.24,<5.28 #85, #92, #94
+- Update protobuf requirement from <4.26,>=3.13 to >=3.13,<5.29 #85, #92, #94 #97
 - Update pycodestyle requirement from <2.12,>=2.6 to >=2.6,<2.13 #93
 - Update pytest requirement from <7.5,>=6.1 to >=6.1,<8.4 #83, #84, #91, #96
 - Update pytest-cov requirement from <4.2,>=2.10 to >=2.10,<5.1 #87
