@@ -37,7 +37,7 @@ setup_requires = [
 
 mypy_requires = [
     'mypy==1.*',
-    'types-protobuf>=4.24,<5.28'
+    'types-protobuf>=4.24,<5.29'
 ]
 
 tests_require = [
