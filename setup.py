@@ -43,7 +43,7 @@ mypy_requires = [
 tests_require = [
     'codecov==2.1.*',
     'coverage>=5.3,<7.7',
-    'pytest-cov>=2.10,<5.1',
+    'pytest-cov>=2.10,<6.1',
     'pytest-env==1.1.5',
     'pytest-mock>=3.11,<3.15',
     'pytest>=6.1,<8.4',
