@@ -9,7 +9,7 @@
 - Update pytest-cov requirement from <4.2,>=2.10 to >=2.10,<6.1 #87 #101
 - Update pytest-env requirement from <1.2,==0.6 to 1.1.5 #81 #98, #99
 - Update pytest-mock requirement from <3.13,>=3.11 to >=3.11,<3.15 #86
-- Update types-protobuf requirement from ==4.24.* to >=4.24,<5.29 #88 #89 #100
+- Update types-protobuf requirement from ==4.24.* to >=4.24,<5.30 #88 #89 #100 #103
 - Use codecov GH Action instead of Shell, use GH Secret #91
 - Set GH Action checkout depth to 2 to fix Codecov error #91
 - Dropped Python 3.7 so we can use pytest-env #81
