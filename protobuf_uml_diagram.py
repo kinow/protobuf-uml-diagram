@@ -256,11 +256,14 @@ class Diagram:
               help='Output directory.')
 @click.option('--full_names', type=bool, required=False, default=True,
               help='Use full names (Class.type) or not (type) in diagram.')
-def main(proto: str, output: Path, full_names: bool) -> None:
+@click.option('--format', '_format', type=click.Choice(["png", "svg"]), required=False, default="png",
+              help='Diagram output format (e.g. png, svg).')
+def main(proto: str, output: Path, full_names: bool, _format: str) -> None:
     Diagram() \
         .from_file(proto) \
         .to_file(output) \
         .with_full_names(full_names) \
+        .with_format(_format) \
         .build()
 
 
