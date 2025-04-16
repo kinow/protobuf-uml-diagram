@@ -12,5 +12,6 @@ for p in $(find ${PROTO_PATH} -name '*.proto'); do
     p="${p/\/in\//}"
     p="${p/\//.}"
     p="${p/.proto/_pb2}"
-    python protobuf_uml_diagram.py --proto "${p}" --output=/out
+    python protobuf_uml_diagram.py --proto "${p}" --output=/out --format png
+    python protobuf_uml_diagram.py --proto "${p}" --output=/out --format svg
 done
