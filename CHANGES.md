@@ -12,7 +12,8 @@
 - Update types-protobuf requirement from ==4.24.* to >=4.24,<5.30 #88 #89 #100 #103
 - Use codecov GH Action instead of Shell, use GH Secret #91
 - Set GH Action checkout depth to 2 to fix Codecov error #91
-- Dropped Python 3.7 so we can use pytest-env #81
+- Dropped Python 3.7, so we can use pytest-env #81
+- Add --format option to CLI (thanks @dcunited001) #109
 
 ## 0.13 (22/11/2023)
 
