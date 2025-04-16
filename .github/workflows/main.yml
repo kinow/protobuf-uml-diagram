@@ -74,5 +74,7 @@ jobs:
           bash dockerbuild.sh
           mkdir -p $(pwd)/test_data/out
           bash dockerrun.sh $(pwd -P)/test_data/ $(pwd)/test_data/out
+          [ -f "./test_data/out/issue_10_pb2.svg" ] || exit 1
+          [ -f "./test_data/out/issue_10_pb2.png" ] || exit 1
 
 # TODO: publish to PYPI in GH actions? see skosmos-client & other natlib workflows
