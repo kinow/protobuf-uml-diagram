@@ -1,2 +1,3 @@
 #!/bin/bash
- docker build -t pb_uml .
+
+docker build --load -t pb_uml .
