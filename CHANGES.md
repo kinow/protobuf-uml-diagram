@@ -14,6 +14,7 @@
 - Set GH Action checkout depth to 2 to fix Codecov error #91
 - Dropped Python 3.7, so we can use pytest-env #81
 - Add --format option to CLI (thanks @dcunited001) #109
+- Dropped darwin OS from GH Actions, add py3.11 to the matrix #110
 
 ## 0.13 (22/11/2023)
 
