@@ -1,6 +1,6 @@
 # Changes
 
-## 0.14 (??/??/20??)
+## 0.14 (19/04/2025)
 
 - Update coverage requirement from <7.4,>=5.3 to >=5.3,<7.9 #82, #90 #95 #105 #106
 - Update protobuf requirement from <4.26,>=3.13 to >=2.10,<6.2,<5.30 #85 #92 #94 #97 #102 #104 #108
