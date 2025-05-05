@@ -2,6 +2,8 @@
 
 ## 0.15 (??/??/????)
 
+- Update types-protobuf requirement from <5.30,>=4.24 to >=4.24,<6.31 #111
+
 ## 0.14 (19/04/2025)
 
 - Update coverage requirement from <7.4,>=5.3 to >=5.3,<7.9 #82, #90 #95 #105 #106
