@@ -2,6 +2,7 @@
 
 ## 0.15 (??/??/????)
 
+- Update protobuf requirement from <6.31,>=3.13 to >=3.13,<6.32 #112
 - Update types-protobuf requirement from <5.30,>=4.24 to >=4.24,<6.31 #111
 
 ## 0.14 (19/04/2025)
