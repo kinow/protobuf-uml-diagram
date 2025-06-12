@@ -27,6 +27,7 @@ from typing import cast, List, Optional, Tuple, Union
 
 import click
 from google.protobuf.descriptor import Descriptor, FieldDescriptor
+from google.protobuf.descriptor import EnumDescriptor
 from google.protobuf.descriptor_pb2 import FieldDescriptorProto
 from graphviz import Source  # type: ignore  # TODO: https://github.com/xflr6/graphviz/issues/203
 
@@ -67,6 +68,11 @@ LABELS_BY_NUMBER = {
     for text, number in FieldDescriptorProto.Label.items()
 }
 
+def _process_enum(enum_desc: EnumDescriptor, classes: List[str], full_names=True) -> None:
+    enum_name = enum_desc.full_name if full_names else enum_desc.name
+    enum_lines = [f"+ {value.name} = {value.number}" for value in enum_desc.values]
+    enum_block = f'    "{enum_name}" [label = "{{{enum_name}|\\n' + '\\n'.join(enum_lines) + '}}"]'
+    classes.append(enum_block)
 
 def _process_module(proto_module: ModuleType, full_names=True) -> Tuple[List[str], List[str]]:
     """"
@@ -121,6 +127,11 @@ def _process_descriptor(
                     f"    \"{this_node}\"->\"{that_node}\" [arrowhead=none;headlabel=\"1\";taillabel=\"1\"]")
 
             field_type = that_node  # so we replace the 'message' token by the actual name
+        elif _field.type == FieldDescriptor.TYPE_ENUM:
+            field_type = _field.enum_type.full_name if full_names else _field.enum_type.name
+            _process_enum(_field.enum_type, classes, full_names=full_names)
+            relationships.append(
+                f"    \"{_get_field_name(descriptor, full_names)}\"->\"{field_type}\" [arrowhead=none;headlabel=\"1\";taillabel=\"1\"]")
         else:
             field_type = TYPES_BY_NUMBER[_field.type]
 
@@ -136,7 +147,7 @@ def _process_descriptor(
     # nested types
     for nested_descriptor in descriptor.nested_types:
         _process_descriptor(nested_descriptor, classes, relationships, full_names=full_names)
-    # TODO: what about extension, enum, ...?
+    # TODO: what about extension, ...?
 
 
 def _get_uml_template(proto_module: ModuleType, full_names=True) -> str:
