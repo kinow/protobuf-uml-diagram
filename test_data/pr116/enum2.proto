@@ -1,0 +1,14 @@
+syntax = "proto2";
+
+enum TestEnum2 {
+    UNKNOWN = 0;
+    ONE = 1;
+    TWO = 2;
+    THREE = 3;
+    FOUR = 4;
+  }
+
+message test2 {
+  required TestEnum2 test_enum2 = 1;
+  required bytes code = 2;
+}

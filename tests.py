@@ -148,3 +148,27 @@ def test_to_file_with_protobuf_missing_file():
         with pytest.raises(ValueError) as cm:
             d.to_file(Path(tf))
         assert str(cm.value) == 'Missing protobuf module!'
+
+
+def test_enum1():
+    """Verify we can parse when an enum is part of a message."""
+    with TemporaryDirectory() as tmpdir:
+        tf = os.path.join(tmpdir, 'diagram.png')
+        Diagram() \
+            .from_file('test_data.pr116.enum1_pb2') \
+            .to_file(Path(tf)) \
+            .with_format('png') \
+            .build()
+        assert os.path.getsize(tf) > 0
+
+
+def test_enum2():
+    """Verify we can parse when an enum is outside a message."""
+    with TemporaryDirectory() as tmpdir:
+        tf = os.path.join(tmpdir, 'diagram.png')
+        Diagram() \
+            .from_file('test_data.pr116.enum2_pb2') \
+            .to_file(Path(tf)) \
+            .with_format('png') \
+            .build()
+        assert os.path.getsize(tf) > 0
