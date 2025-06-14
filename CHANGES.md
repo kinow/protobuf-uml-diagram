@@ -2,6 +2,9 @@
 
 ## 0.16 (??/??/20??)
 
+- Update coverage requirement from <7.9,>=5.3 to >=5.3,<7.10 #115
+- Update pytest-cov requirement from <6.2,>=2.10 to >=2.10,<6.3 #114
+
 ## 0.15 (14/06/2025)
 
 - Update protobuf requirement from <6.31,>=3.13 to >=3.13,<6.32 #112
