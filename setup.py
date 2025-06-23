@@ -47,7 +47,7 @@ tests_require = [
     'pytest-env==1.1.5',
     'pytest-mock>=3.11,<3.15',
     'pytest>=6.1,<8.5',
-    'pycodestyle>=2.6,<2.14'
+    'pycodestyle>=2.6,<2.15'
 ]
 
 extras_require = {
