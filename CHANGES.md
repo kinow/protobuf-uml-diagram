@@ -4,6 +4,7 @@
 
 - Update coverage requirement from <7.9,>=5.3 to >=5.3,<7.11 #115 #119
 - Update graphviz requirement from <0.21,>=0.14 to >=0.14,<0.22 #117
+- Update protobuf requirement from <6.32,>=3.13 to >=3.13,<6.33 #121
 - Update pycodestyle requirement from <2.14,>=2.6 to >=2.6,<2.15 #118
 - Update pytest-cov requirement from <6.2,>=2.10 to >=2.10,<6.3 #114
 
