@@ -1,4 +1,4 @@
-FROM python:3.9-buster
+FROM python:3.9
 RUN apt-get update && apt-get install -y curl graphviz \
   && curl -L https://github.com/protocolbuffers/protobuf/releases/download/v3.7.1/protoc-3.7.1-linux-x86_64.zip -o protoc-3.7.1.zip \
   && unzip protoc-3.7.1.zip -d protoc-3.7.1 \
