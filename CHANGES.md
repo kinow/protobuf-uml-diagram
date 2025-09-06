@@ -7,6 +7,8 @@
 - Update protobuf requirement from <6.32,>=3.13 to >=3.13,<6.33 #121
 - Update pycodestyle requirement from <2.14,>=2.6 to >=2.6,<2.15 #118
 - Update pytest-cov requirement from <6.2,>=2.10 to >=2.10,<6.3 #114
+- Update pytest-mock requirement from <3.15,>=3.11 to >=3.11,<3.16 #122
+- Use tag 3.9 for Docker python image #122
 
 ## 0.15 (14/06/2025)
 
