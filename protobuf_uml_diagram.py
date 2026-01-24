@@ -68,11 +68,13 @@ LABELS_BY_NUMBER = {
     for text, number in FieldDescriptorProto.Label.items()
 }
 
+
 def _process_enum(enum_desc: EnumDescriptor, classes: List[str], full_names=True) -> None:
     enum_name = enum_desc.full_name if full_names else enum_desc.name
     enum_lines = [f"+ {value.name} = {value.number}" for value in enum_desc.values]
     enum_block = f'    "{enum_name}" [label = "{{{enum_name}|\\n' + '\\n'.join(enum_lines) + '}}"]'
     classes.append(enum_block)
+
 
 def _process_module(proto_module: ModuleType, full_names=True) -> Tuple[List[str], List[str]]:
     """"
@@ -121,7 +123,8 @@ def _process_descriptor(
             label = LABELS_BY_NUMBER[_field.label]
             if label == 'repeated':
                 relationships.append(
-                    f"    \"{that_node}\"->\"{this_node}\" [dir=backward;arrowhead=odiamond,arrowtail=normal;headlabel=\"1\";taillabel=\"0..*\"]")
+                    f"    \"{that_node}\"->\"{this_node}\" [dir=backward;arrowhead=odiamond,arrowtail=normal;"
+                    f"headlabel=\"1\";taillabel=\"0..*\"]")
             else:
                 relationships.append(
                     f"    \"{this_node}\"->\"{that_node}\" [arrowhead=none;headlabel=\"1\";taillabel=\"1\"]")
@@ -131,7 +134,8 @@ def _process_descriptor(
             field_type = _field.enum_type.full_name if full_names else _field.enum_type.name
             _process_enum(_field.enum_type, classes, full_names=full_names)
             relationships.append(
-                f"    \"{_get_field_name(descriptor, full_names)}\"->\"{field_type}\" [arrowhead=none;headlabel=\"1\";taillabel=\"1\"]")
+                f"    \"{_get_field_name(descriptor, full_names)}\"->\"{field_type}\" "
+                f"[arrowhead=none;headlabel=\"1\";taillabel=\"1\"]")
         else:
             field_type = TYPES_BY_NUMBER[_field.type]
 

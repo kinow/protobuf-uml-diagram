@@ -42,7 +42,7 @@ jobs:
         python -m pip install .[all]
     - name: Linter
       run: |
-        pycodestyle --filename=protobuf-uml-diagram --exclude=.git,__pycache__,.tox,venv,protobuf_uml_diagram.egg-info,.pytest_cache --max-line-length=120
+        pycodestyle --filename=protobuf-uml-diagram --exclude=.git,__pycache__,.tox,venv,protobuf_uml_diagram.egg-info,.pytest_cache --max-line-length=120 protobuf_uml_diagram.py
     - name: MyPy
       run: |
         mypy protobuf_uml_diagram.py
