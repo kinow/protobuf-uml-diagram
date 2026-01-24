@@ -48,7 +48,7 @@ jobs:
         mypy protobuf_uml_diagram.py
     - name: Unit tests with coverage
       run: |
-        coverage run -p setup.py test
+        pytest --cov
     - name: Functional tests with coverage
       run: |
         coverage run -p protobuf_uml_diagram.py --proto test_data/issue_10.proto --output /tmp
