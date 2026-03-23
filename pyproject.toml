@@ -42,7 +42,7 @@ protobuf-uml-diagram = "protobuf_uml_diagram:main"
 tests = [
     "codecov==2.1.*",
     "coverage>=5.3,<7.11",
-    "pytest-cov>=2.10,<7.1",
+    "pytest-cov>=2.10,<7.2",
     "pytest-env==1.1.5",
     "pytest-mock>=3.11,<3.16",
     "pytest>=6.1,<8.5",
