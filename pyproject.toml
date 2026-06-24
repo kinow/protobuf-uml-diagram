@@ -50,7 +50,7 @@ tests = [
 ]
 mypy = [
     "mypy==1.*",
-    "types-protobuf>=4.24,<6.33"
+    "types-protobuf>=4.24,<7.35"
 ]
 all = [
     "protobuf-uml-diagram[tests]",
