@@ -49,7 +49,7 @@ tests = [
     "pycodestyle>=2.6,<2.15"
 ]
 mypy = [
-    "mypy==1.*",
+    "mypy>=1,<3",
     "types-protobuf>=4.24,<6.33"
 ]
 all = [
