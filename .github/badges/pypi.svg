@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="90" height="20" role="img" aria-label="PyPI: v0.16">
+  <title>PyPI: v0.16</title>
+  <linearGradient id="a" x2="0" y2="100%">
+    <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
+    <stop offset="1" stop-opacity=".1"/>
+  </linearGradient>
+  <rect width="90" height="20" rx="3" fill="#555"/>
+  <rect x="45" width="45" height="20" rx="3" fill="#ffd343"/>
+  <rect width="90" height="20" rx="3" fill="url(#a)"/>
+  <g fill="#fff" font-family="Verdana,Arial,sans-serif" font-size="11">
+    <text x="22" y="14" text-anchor="middle">PyPI</text>
+  </g>
+  <g fill="#000" font-family="Verdana,Arial,sans-serif" font-size="11">
+    <text x="68" y="14" text-anchor="middle">v0.16</text>
+  </g>
+</svg>

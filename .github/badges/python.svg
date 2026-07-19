@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="104" height="20" role="img" aria-label="Python: >=3.10">
+  <title>Python: >=3.10</title>
+  <linearGradient id="a" x2="0" y2="100%">
+    <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
+    <stop offset="1" stop-opacity=".1"/>
+  </linearGradient>
+  <rect width="104" height="20" rx="3" fill="#555"/>
+  <rect x="52" width="52" height="20" rx="3" fill="#3776ab"/>
+  <rect width="104" height="20" rx="3" fill="url(#a)"/>
+  <g fill="#fff" font-family="Verdana,Arial,sans-serif" font-size="11">
+    <text x="26" y="14" text-anchor="middle">Python</text>
+  </g>
+  <g fill="#000" font-family="Verdana,Arial,sans-serif" font-size="11">
+    <text x="78" y="14" text-anchor="middle">>=3.10</text>
+  </g>
+</svg>
