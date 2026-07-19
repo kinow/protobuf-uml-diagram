@@ -11,6 +11,10 @@
 - Update pytest-mock requirement from <3.15,>=3.11 to >=3.11,<3.16 #122
 - Update types-protobuf requirement from <6.31,>=4.24 to >=4.24,<6.33 #125
 - Use tag 3.9 for Docker python image #122
+- Used pcu to upgrade: click>=8.4.2, graphviz>=8.4.2, protobuf>=7.35.1, codecov==2.1.13, coverage>=7.15.2,
+  pytest-cov>=7.1.0, pytest-env==1.6.0, pytest-mock>=3.15.1, pytest>=9.1.1, pycodestyle>=2.14.0,
+  mypy==2.3.0, types-protobuf>=7.34.1.2026.05.16; fixed new mypy errors, ugpraded Docker container to
+  use Python 3.10+, ran shellcheck against Docker Shell scripts #140
 
 ## 0.15 (14/06/2025)
 
