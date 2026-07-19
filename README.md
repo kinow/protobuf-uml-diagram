@@ -1,6 +1,6 @@
-[![PyPI](.github/badges/pypi.svg)](https://pypi.org/project/protobuf-uml-diagram/)
-[![Python](.github/badges/python.svg)](https://www.python.org/)
-[![License](.github/badges/license.svg)](LICENSE.txt)
+[![PyPI](https://raw.githubusercontent.com/kinow/protobuf-uml-diagram/master/.github/badges/pypi.svg)](https://pypi.org/project/protobuf-uml-diagram/)
+[![Python](https://raw.githubusercontent.com/kinow/protobuf-uml-diagram/master/.github/badges/python.svg)](https://www.python.org/)
+[![License](https://raw.githubusercontent.com/kinow/protobuf-uml-diagram/master/.github/badges/license.svg)](https://github.com/kinow/protobuf-uml-diagram/blob/master/LICENSE.txt)
 [![CI](https://github.com/kinow/protobuf-uml-diagram/actions/workflows/main.yml/badge.svg)](https://github.com/kinow/protobuf-uml-diagram/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/kinow/protobuf-uml-diagram/branch/master/graph/badge.svg)](https://codecov.io/gh/kinow/protobuf-uml-diagram)
 
