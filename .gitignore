@@ -125,3 +125,4 @@ dmypy.json
 # Test data
 test_data/out/
 
+.pcu/

@@ -58,7 +58,7 @@ class PathPath(click.Path):
 # -- UML diagram
 
 # These are the protobuf types. 11 is the message type, meaning another type
-TYPES_BY_NUMBER = {
+TYPES_BY_NUMBER: dict[int, str] = {
     number: text.lower().replace("type_", "")
     for text, number in FieldDescriptorProto.Type.items()
 }
@@ -77,11 +77,9 @@ def _process_enum(enum_desc: EnumDescriptor, classes: List[str], full_names=True
 
 
 def _process_module(proto_module: ModuleType, full_names=True) -> Tuple[List[str], List[str]]:
-    """"
-    :return: list of descriptors
-    :rtype: List[Descriptor]
+    """
     :param full_names: whether the output must include the full name of classes
-    :type full_names: bool
+    :return: list of descriptors
     """
     classes: List[str] = []
     relationships: List[str] = []
@@ -90,7 +88,9 @@ def _process_module(proto_module: ModuleType, full_names=True) -> Tuple[List[str
     return classes, relationships
 
 
-def _get_field_name(descriptor: Descriptor, full_names=True) -> str:
+def _get_field_name(descriptor: Descriptor | FieldDescriptor | None, full_names=True) -> str:
+    if descriptor is None:
+        raise ValueError("Descriptor is None!")
     if full_names:
         return descriptor.full_name
     return descriptor.name
@@ -102,9 +102,7 @@ def _process_descriptor(
         full_names=True) -> None:
     """
     :param descriptor: a Protobuf descriptor
-    :type descriptor: Descriptor
     :param classes: list of classes
-    :type classes: list
     :param full_names: whether the output must include the full name of classes
     :type full_names: bool
     """
@@ -115,13 +113,12 @@ def _process_descriptor(
     type_template_text.write(
         f"""    \"{this_node}\"[label = "{{{this_node}|""")
     fields = []
-    for _field in descriptor.fields:
-        if _field.type == FieldDescriptor.TYPE_MESSAGE:
+    for _field in [f for f in descriptor.fields if f is not None]:
+        if _field.type == FieldDescriptor.TYPE_MESSAGE and _field.message_type is not None:
             that_node = _get_field_name(_field.message_type, full_names=full_names)
 
             # is it a repeated field?
-            label = LABELS_BY_NUMBER[_field.label]
-            if label == 'repeated':
+            if _field.is_repeated:
                 relationships.append(
                     f"    \"{that_node}\"->\"{this_node}\" [dir=backward;arrowhead=odiamond,arrowtail=normal;"
                     f"headlabel=\"1\";taillabel=\"0..*\"]")
@@ -130,7 +127,7 @@ def _process_descriptor(
                     f"    \"{this_node}\"->\"{that_node}\" [arrowhead=none;headlabel=\"1\";taillabel=\"1\"]")
 
             field_type = that_node  # so we replace the 'message' token by the actual name
-        elif _field.type == FieldDescriptor.TYPE_ENUM:
+        elif _field.type == FieldDescriptor.TYPE_ENUM and _field.enum_type is not None:
             field_type = _field.enum_type.full_name if full_names else _field.enum_type.name
             _process_enum(_field.enum_type, classes, full_names=full_names)
             relationships.append(
@@ -155,14 +152,11 @@ def _process_descriptor(
 
 
 def _get_uml_template(proto_module: ModuleType, full_names=True) -> str:
-    """
-    Return the graphviz dot template for a UML class diagram.
+    """Return the graphviz dot template for a UML class diagram.
+
     :param proto_module: protobuf module
-    :type proto_module: ModuleType
     :param full_names: whether the output must include the full name of classes
-    :type full_names: bool
     :return: UML template
-    :rtype: str
     """
     classes, relationships = _process_module(proto_module, full_names=full_names)
     uml_template = Template("""
@@ -184,15 +178,14 @@ $relationships
 # -- Protobuf Python module load
 
 def _module(proto: str) -> ModuleType:
-    """
-    Given a protobuf file location, it will replace slashes by dots, drop the
+    """Given a protobuf file location, it will replace slashes by dots, drop the
     .proto and append _pb2.
 
-    This works for the current version of Protobuf, and loads this way the
+    This works for the current version of Protobuf and loads this way the
     Protobuf compiled Python module.
-    :param proto:
-    :return: Protobuf compiled Python module
-    :rtype: ModuleType
+
+    :param proto: Protobuf file location.
+    :return: Protobuf compiled Python module.
     """
     if proto.endswith('.proto'):
         no_extension = f'{proto[:-len(".proto")]}_pb2'
@@ -204,7 +197,7 @@ def _module(proto: str) -> ModuleType:
 # -- Diagram builder
 
 class Diagram:
-    """A diagram builder."""
+    """Diagram builder."""
 
     _proto_module: Union[ModuleType, None] = None
     _rendered_filename: Union[str, None] = None

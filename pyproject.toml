@@ -27,9 +27,9 @@ authors = [
 ]
 license = { file = "LICENSE.txt" }
 dependencies = [
-    "click>=7.1,<8.2",
-    "graphviz>=0.14,<0.22",
-    "protobuf>=3.13,<6.34"
+    "click>=8.4.2",
+    "graphviz>=0.21",
+    "protobuf>=7.35.1"
 ]
 
 [project.urls]
@@ -40,17 +40,17 @@ protobuf-uml-diagram = "protobuf_uml_diagram:main"
 
 [project.optional-dependencies]
 tests = [
-    "codecov==2.1.*",
-    "coverage>=5.3,<7.11",
-    "pytest-cov>=2.10,<7.2",
-    "pytest-env==1.1.5",
-    "pytest-mock>=3.11,<3.16",
-    "pytest>=6.1,<8.5",
-    "pycodestyle>=2.6,<2.15"
+    "codecov==2.1.13",
+    "coverage>=7.15.2",
+    "pytest-cov>=7.1.0",
+    "pytest-env==1.6.0",
+    "pytest-mock>=3.15.1",
+    "pytest>=9.1.1",
+    "pycodestyle>=2.14.0"
 ]
 mypy = [
-    "mypy==1.*",
-    "types-protobuf>=4.24,<6.33"
+    "mypy==2.3.0",
+    "types-protobuf>=7.34.1.20260518"
 ]
 all = [
     "protobuf-uml-diagram[tests]",

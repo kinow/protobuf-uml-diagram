@@ -1,11 +1,30 @@
-FROM python:3.9
-RUN apt-get update && apt-get install -y curl graphviz \
-  && curl -L https://github.com/protocolbuffers/protobuf/releases/download/v3.7.1/protoc-3.7.1-linux-x86_64.zip -o protoc-3.7.1.zip \
-  && unzip protoc-3.7.1.zip -d protoc-3.7.1 \
-  && mv protoc-3.7.1/bin/* /usr/local/bin/ \
-  && mv protoc-3.7.1/include/* /usr/local/include/ \
-  && pip install -U setuptools \
-  && pip install "click==7.0.*" "graphviz==0.10.*" "protobuf==3.7.*"
-ADD docker/gen_uml.sh /
-ADD protobuf_uml_diagram.py /
-CMD [ "/bin/bash", "./run.sh" ]
+FROM python:3.10
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        curl \
+        graphviz \
+        unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install protoc.
+# Keep this version aligned with the protobuf versions tested against.
+ARG PROTOC_VERSION=33.0
+
+RUN curl -LO "https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-linux-x86_64.zip" \
+    && unzip "protoc-${PROTOC_VERSION}-linux-x86_64.zip" -d /tmp/protoc \
+    && mv /tmp/protoc/bin/protoc /usr/local/bin/ \
+    && mv /tmp/protoc/include/* /usr/local/include/ \
+    && rm -rf /tmp/protoc "protoc-${PROTOC_VERSION}-linux-x86_64.zip"
+
+WORKDIR /app
+
+COPY . .
+
+RUN python -m pip install --upgrade pip setuptools wheel \
+    && python -m pip install .
+
+COPY docker/gen_uml.sh /usr/local/bin/gen_uml.sh
+RUN chmod +x /usr/local/bin/gen_uml.sh
+
+CMD ["/usr/local/bin/gen_uml.sh"]
