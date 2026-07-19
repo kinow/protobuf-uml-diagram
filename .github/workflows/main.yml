@@ -11,12 +11,12 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     env:
-      PYTHON_COVERAGE_ENABLED: '3.8'
+      PYTHON_COVERAGE_ENABLED: '3.10'
       PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: python
     strategy:
       matrix:
         os: [ 'ubuntu-latest' ]
-        python: [3.8, 3.9, '3.10', '3.11']
+        python: ['3.10', '3.11', '3.12', '3.13']
 
     steps:
     - uses: actions/checkout@v2
