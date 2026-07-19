@@ -18,7 +18,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "protobuf-uml-diagram"
-version = "0.16.dev0"
+version = "0.16"
 description = "Create UML diagrams from Protobuf proto files"
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.10"
