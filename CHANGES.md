@@ -2,6 +2,7 @@
 
 ## 0.16 (??/??/20??)
 
+- Dropped Python 3.8 and 3.9, testing in GH Actions now with up to 3.13 #139
 - Update coverage requirement from <7.9,>=5.3 to >=5.3,<7.11 #115 #119
 - Update graphviz requirement from <0.21,>=0.14 to >=0.14,<0.22 #117
 - Update protobuf requirement from <6.32,>=3.13 to >=3.13,<6.34 #121 #126
