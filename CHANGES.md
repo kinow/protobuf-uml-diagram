@@ -1,7 +1,8 @@
 # Changes
 
-## 0.16 (??/??/20??)
+## 0.16 (19/07/2026)
 
+- docker/gen\_uml.sh fails if directory name starts with "proto" #140
 - Dropped Python 3.8 and 3.9, testing in GH Actions now with up to 3.13 #139
 - Update coverage requirement from <7.9,>=5.3 to >=5.3,<7.11 #115 #119
 - Update graphviz requirement from <0.21,>=0.14 to >=0.14,<0.22 #117
