@@ -54,7 +54,7 @@ jobs:
         coverage run -p protobuf_uml_diagram.py --proto test_data/issue_10.proto --output /tmp
     - name: Coverage
       if: ${{ success() &&  matrix.python == env.PYTHON_COVERAGE_ENABLED }}
-      uses: codecov/codecov-action@v4
+      uses: codecov/codecov-action@v7
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
   docker:
